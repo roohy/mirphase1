@@ -13,11 +13,12 @@ public class ReadFile {
 	String directory_addr;
 	
 	public ReadFile(String addr){
+		System.out.println("New File Reader made to read from directory:"+addr);
 		this.directory_addr = addr;
 	}
 	
 	public List<BufferedReader> getDocsBuffers(){
-		
+		System.out.println("Listing Files in Directory...");
 		List<File> fileList = ReadFile.listf(this.directory_addr); //listing all files in directory
 		return this.getBufferedFromList(fileList); //this line converts all files to buffered list and returns them
 		

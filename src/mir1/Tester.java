@@ -6,7 +6,7 @@ import java.util.StringTokenizer;
 
 public class Tester {
 	public static void main(String args[]){
-		ReadFile files = new ReadFile();
+		ReadFile files = new ReadFile("/home/roohy/workspace/data");
 		BufferedReader thebuffer = files.getNextBuffer();
 		String line ;
 		try{
