@@ -8,11 +8,12 @@ public class Doc {
 	BufferedReader buffer;
 	String name;
 	List<Token> tokens;
-	
-	Doc(BufferedReader bf , String name){
+	int docID;
+	Doc(BufferedReader bf , String name, int ID){
 		this.buffer = bf;
 		this.name = name;
 		tokens = null;
+		docID = ID;
 	}
 	
 }

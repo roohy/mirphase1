@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Scanner;
 
 public class ReadFile { 
 	
@@ -24,19 +25,6 @@ public class ReadFile {
 		
 		
 	}
-	//this is a test method
-	public BufferedReader getNextBuffer(){
-		try{
-			BufferedReader buffer = new BufferedReader(new FileReader("/home/roohy/workspace/data/doc1"));
-			return buffer;
-		}
-		catch (IOException e){
-			e.printStackTrace();
-			return null;
-		}
-		
-		
-	}
 	
 	
 	//this function returns gets a file list and retrn buffered file reader for each one
@@ -48,8 +36,10 @@ public class ReadFile {
 			}
 			else{
 				try{
-
-					result.add( new Doc (new BufferedReader(new FileReader(file)),file.getAbsolutePath()));
+					Scanner sc = new Scanner(file.getAbsolutePath()).useDelimiter(".+doc");
+					int fileID = sc.nextInt();
+					System.out.println(" Reading file: "+fileID);
+					result.add( new Doc (new BufferedReader(new FileReader(file)),file.getAbsolutePath(),fileID));
 					
 				}catch(IOException e){
 					System.out.println("Got Stock in adding a file to buffered reader stack");

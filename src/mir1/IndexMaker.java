@@ -4,6 +4,7 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -28,12 +29,12 @@ public class IndexMaker {
 			return;
 		}
 		for (TermDoc td: this.inputTD){
-			addToIndex(td.term, td.doc);
+			addToIndex(td.term, td.docID);
 		}
 	}
 	
 	
-	public void addToIndex(String term , String doc){
+	public void addToIndex(String term , int doc){
 		IndexItem temporal = this.index.get(term);
 		if( temporal == null){
 			temporal = new IndexItem(term);
@@ -74,5 +75,34 @@ public class IndexMaker {
 			}
 		
 		
+	}
+	public List<String> getDictionary(){
+		List<String> result = new ArrayList<String>();
+		result.addAll(this.index.keySet());
+		return result;
+	}
+	public void printDictionary(){
+		for( String st: this.index.keySet()){
+			System.out.println(st);
+		}
+	}
+	public String getPostingListString(String term){
+		IndexItem item = this.index.get(term.toLowerCase());
+		if(item == null){
+			return null;
+		}
+		else{
+			return item.getPostingListString();
+		}
+	}
+	
+	public List<Integer> getPostingListNoFreq(String term){
+		IndexItem item = this.index.get(term);
+		if( item == null){
+			return null;
+		}
+		else{
+			return item.getPostingListNoFreq();
+		}
 	}
 }

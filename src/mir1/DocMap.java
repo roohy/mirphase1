@@ -48,7 +48,7 @@ public class DocMap {
 		this.tdList = new ArrayList<TermDoc>();
 		for( Doc doc: this.docs){
 			for ( Token token: doc.tokens){
-				tdList.add(new TermDoc(token.content,doc.name));
+				tdList.add(new TermDoc(token.content,doc.docID));
 			}
 		}
 	}

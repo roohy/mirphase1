@@ -2,14 +2,16 @@ package mir1;
 
 public class TermDoc {
 	String term;
-	String doc;
-	TermDoc(String t, String d){
+	//String doc;
+	int docID;
+	
+	TermDoc(String t, int d){
 		term = t;
-		doc = d;
+		docID = d;
 	}
 	public boolean equals(TermDoc td){
 		if (td == null)
 			return false;
-		return (td.term==this.term && td.doc==this.doc);
+		return (td.term==this.term && td.docID==this.docID);
 	}
 }
