@@ -45,6 +45,7 @@ public class Tokenizer {
 		try{
 
 			while((line = this.bufferReader.readLine()) != null){
+				System.out.println("tokenizing line: "+line);
 				pos = 0;
 				end = line.length();
 				Matcher matcher = Pattern.compile("dummy").matcher(line);
@@ -53,7 +54,7 @@ public class Tokenizer {
 					matcher.region(pos, end);
 					for (Rule rule: rules){
 						if(matcher.usePattern(rule.pattern).lookingAt()){
-							//System.out.println("Matcher got a pattern in "+matcher.group());
+							System.out.print("Matcher: "+matcher.group()+"||||");
 							this.tokensList.add(new Token(rule.name,matcher.group()));
 							pos = matcher.end();
 							break;
@@ -75,6 +76,7 @@ public class Tokenizer {
 	
 	public void setBuffer(BufferedReader theBuffer){
 		this.bufferReader = theBuffer;
+		this.tokensList = new ArrayList<Token>();
 	}
 	public List<Token> getTokens(){
 		return this.tokensList;

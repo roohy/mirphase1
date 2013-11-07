@@ -32,6 +32,7 @@ public class DocMap {
 			System.out.println("Document "+doc.name+" is starting to be tokenized");
 			tokenizer.setBuffer(doc.buffer);
 			tokenizer.Tokenize();
+			
 			doc.tokens = tokenizer.getTokens();
 		}
 	}
