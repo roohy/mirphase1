@@ -26,5 +26,6 @@ public class Tester {
 		index.compileList();
 		//now we print index to test the program
 		index.printIndex();
+		index.saveIndex("../hi.txt");
 	}
 }

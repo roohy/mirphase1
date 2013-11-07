@@ -1,5 +1,9 @@
 package mir1;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -44,5 +48,31 @@ public class IndexMaker {
 			Map.Entry<String, IndexItem> tempEntry = (Map.Entry<String,IndexItem>)iter.next();
 			tempEntry.getValue().printItem();
 		}
+	}
+	public void saveIndex(String addr){
+		
+			try{
+				File file = new File(addr);
+				if( !file.exists()){
+					file.createNewFile();
+				}
+
+
+				FileWriter fw = new FileWriter(file.getAbsoluteFile());
+				BufferedWriter writebuffer = new BufferedWriter(fw);
+				
+				
+				Iterator<Map.Entry<String,IndexItem>> iter = index.entrySet().iterator();
+				while(iter.hasNext()){
+					Map.Entry<String, IndexItem> tempEntry = (Map.Entry<String,IndexItem>)iter.next();
+					tempEntry.getValue().saveItem(writebuffer);
+				}
+				
+			}catch(IOException e){
+				System.out.println("Error check permissions and your address");
+				e.printStackTrace();
+			}
+		
+		
 	}
 }

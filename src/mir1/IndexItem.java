@@ -1,5 +1,7 @@
 package mir1;
 
+import java.io.BufferedWriter;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -37,5 +39,14 @@ public class IndexItem {
 			System.out.print(""+temporalEntry.getKey()+":"+temporalEntry.getValue()+" ");
 		}
 		System.out.println("");
+	}
+	public void saveItem(BufferedWriter buffer) throws IOException {
+		Iterator<Entry<String,Integer>> iterator = this.docs.entrySet().iterator();
+		buffer.write("term: "+this.name+"["+this.DocFreq+"]:");
+		while(iterator.hasNext()){
+			Entry<String, Integer> temporalEntry = (Entry<String,Integer>)iterator.next();
+			buffer.write(""+temporalEntry.getKey()+":"+temporalEntry.getValue()+" ");
+		}
+		buffer.newLine();
 	}
 }
