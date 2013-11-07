@@ -18,6 +18,12 @@ public class Tester {
 		 * which we will make at this step below
 		 */
 		List<TermDoc> tdList = mapper.getTermDocMap();
-
+		IndexMaker index = new IndexMaker();
+		//first we add the list as a new list to indexer we can do this multiple time 
+		index.addTDList(tdList);
+		//then we compile the list into the index, we have to do this every time we add a new td list
+		index.compileList();
+		//now we print index to test the program
+		index.printIndex();
 	}
 }
