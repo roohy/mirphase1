@@ -53,7 +53,8 @@ public class Tokenizer {
 					matcher.region(pos, end);
 					for (Rule rule: rules){
 						if(matcher.usePattern(rule.pattern).lookingAt()){
-							this.tokensList.add(new Token(rule.name,matcher.start(),matcher.end()));
+							//System.out.println("Matcher got a pattern in "+matcher.group());
+							this.tokensList.add(new Token(rule.name,matcher.group()));
 							pos = matcher.end();
 							break;
 						}

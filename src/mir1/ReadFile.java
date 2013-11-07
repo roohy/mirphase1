@@ -17,7 +17,7 @@ public class ReadFile {
 		this.directory_addr = addr;
 	}
 	
-	public List<BufferedReader> getDocsBuffers(){
+	public List<Doc> getDocsBuffers(){
 		System.out.println("Listing Files in Directory...");
 		List<File> fileList = ReadFile.listf(this.directory_addr); //listing all files in directory
 		return this.getBufferedFromList(fileList); //this line converts all files to buffered list and returns them
@@ -40,8 +40,8 @@ public class ReadFile {
 	
 	
 	//this function returns gets a file list and retrn buffered file reader for each one
-	public List<BufferedReader> getBufferedFromList( List<File> input_files){
-		List<BufferedReader> result = new ArrayList<BufferedReader>();
+	public List<Doc> getBufferedFromList( List<File> input_files){
+		List<Doc> result = new ArrayList<Doc>();
 		for( File file: input_files){
 			if(!file.isFile()){
 				continue;
@@ -49,7 +49,7 @@ public class ReadFile {
 			else{
 				try{
 
-					result.add( new BufferedReader(new FileReader(file)));
+					result.add( new Doc (new BufferedReader(new FileReader(file)),file.getAbsolutePath()));
 					
 				}catch(IOException e){
 					System.out.println("Got Stock in adding a file to buffered reader stack");
@@ -71,15 +71,19 @@ public class ReadFile {
 
         // get all the files from a directory
         File[] fList = directory.listFiles();
-        resultList.addAll(Arrays.asList(fList));
+        
+        //uncomment the code below in case you wanted to list all - it is not recommended nor encouraged ask roohy:D
+        //resultList.addAll(Arrays.asList(fList));
         for (File file : fList) {
             if (file.isFile()) {
                 System.out.println(file.getAbsolutePath());
+                resultList.add(file);
             } else if (file.isDirectory()) {
-                resultList.addAll(listf(file.getAbsolutePath()));
+                System.out.println("This is a Directory not a File, Uncomment the code below to read inside the directories eighter");
+            	//resultList.addAll(listf(file.getAbsolutePath()));
             }
         }
-        //System.out.println(fList);
+        System.out.println("Returning Results to Master");
         return resultList;
     } 
 	
