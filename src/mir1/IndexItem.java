@@ -29,8 +29,8 @@ public class IndexItem {
 		}
 		else{
 			docs.put(docName, new Integer(1));
+			DocFreq++;
 		}
-		DocFreq++;
 	}
 	
 	public void printItem(){
@@ -52,6 +52,9 @@ public class IndexItem {
 		buffer.newLine();
 	}
 	
+	
+	//this function return a string which shows the posting list for this particular term
+	//use this for print and UI purposes
 	public String getPostingListString(){
 		String result = new String("");
 		Iterator<Entry<Integer,Integer>> iterator = this.docs.entrySet().iterator();
@@ -64,11 +67,18 @@ public class IndexItem {
 		return result;
 	}
 	
-public List<Integer> getPostingListNoFreq(){
+	/* this function returns the posting list for this particual index Item and term
+	 * as a list of integers, which contains the docIDs from posting list and contains nothing abut frequency of terms
+	 */
+	public List<Integer> getPostingListNoFreq(){
 		
 		List<Integer> result = new ArrayList<Integer>();
 		result.addAll(docs.keySet());
 		return result;
+	}
+	
+	public Map<Integer,Integer> getPostingListComplete(){
+		return this.docs;
 	}
 }
 

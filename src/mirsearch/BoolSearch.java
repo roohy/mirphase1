@@ -20,6 +20,7 @@ public class BoolSearch {
 		if( terms.size() == 1 ){
 			return list.get(0);
 		}
+		
 		result = SearchClass.intersection(list.get(0), list.get(1));
 		
 		for ( int i = 2; i < result.size(); i++){

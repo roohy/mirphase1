@@ -86,6 +86,9 @@ public class IndexMaker {
 			System.out.println(st);
 		}
 	}
+	
+
+	//see the comments about get posting list string in index Item class ;)
 	public String getPostingListString(String term){
 		IndexItem item = this.index.get(term.toLowerCase());
 		if(item == null){
@@ -96,6 +99,8 @@ public class IndexMaker {
 		}
 	}
 	
+	
+	//see the comments about get posting list no freq in index Item class ;)
 	public List<Integer> getPostingListNoFreq(String term){
 		IndexItem item = this.index.get(term);
 		if( item == null){
@@ -105,4 +110,16 @@ public class IndexMaker {
 			return item.getPostingListNoFreq();
 		}
 	}
+	
+	public List<Map<Integer,Integer>> getPostingListComplete(List<String> terms){
+		List<Map<Integer,Integer>> results = new ArrayList<Map<Integer,Integer>>();
+		for(String term: terms){
+			IndexItem temporal = index.get(term);
+			if(temporal == null)
+				continue;
+			results.add(temporal.getPostingListComplete());
+		}
+		return results;
+	}
+
 }
