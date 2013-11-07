@@ -16,7 +16,7 @@ public class WordCountSearch {
 	
 	
 	public List<Integer> searchIt(List<String> terms, int maxCount){
-		List<Integer> result = new ArrayList<Integer>();
+		List<Integer> result;
 		Map<Integer,Integer> queryDoc = new HashMap<Integer,Integer>();
 		for (String term : terms){
 			List<Integer> temporalList = index.getPostingListNoFreq(term);
@@ -34,7 +34,7 @@ public class WordCountSearch {
 		return result;
 	}
 	//this function gets the hash code and returns "count"th maximum values
-	public List<Integer> sortResults(Map<Integer,Integer> input, int count){
+	public static List<Integer> sortResults(Map<Integer,Integer> input, int count){
 		List<Integer> results = new ArrayList<Integer>();
 		for ( int i = 0 ; i < count ; i++){
 			int maxDocID = maxResult(input);
@@ -48,7 +48,7 @@ public class WordCountSearch {
 		return results;
 	}
 	
-	public int maxResult(Map<Integer,Integer> input){
+	public static int maxResult(Map<Integer,Integer> input){
 		Entry<Integer, Integer> maxEntry = null;
 		for( Entry<Integer,Integer> temporal: input.entrySet()){
 			if(maxEntry == null || temporal.getValue() > maxEntry.getValue())
