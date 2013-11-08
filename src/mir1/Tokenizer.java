@@ -1,7 +1,10 @@
 package mir1;
 
 import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
@@ -27,12 +30,23 @@ public class Tokenizer {
 		List<Rule> rules = new ArrayList<Rule>();
 		
 	}
-	Tokenizer(BufferedReader bf , List<Rule> rules){
+	public Tokenizer(BufferedReader bf , List<Rule> rules){
 		this.bufferReader  = bf;
 		this.rules = rules;
 		this.nextToken = null;
 		this.tokensList = new ArrayList<Token>();
 	}
+	
+	public Tokenizer(String st , List<Rule> rules){
+		
+		InputStream is = new ByteArrayInputStream(st.getBytes());
+		BufferedReader bf = new BufferedReader(new InputStreamReader(is));
+		this.bufferReader  = bf;
+		this.rules = rules;
+		this.nextToken = null;
+		this.tokensList = new ArrayList<Token>();
+	}
+	
 	public void addRule(Rule rule){
 		this.rules.add(rule);
 	}

@@ -17,15 +17,32 @@ public class BoolSearch {
 		for(String term : terms){
 			list.add(this.index.getPostingListNoFreq(term));
 		}
-		if( terms.size() == 1 ){
+		if( list.size() == 1 ){
 			return list.get(0);
 		}
 		
 		result = SearchClass.intersection(list.get(0), list.get(1));
-		
-		for ( int i = 2; i < result.size(); i++){
+		for ( int i = 2; i < list.size(); i++){
 			result = SearchClass.intersection(result, list.get(i));
 		}
 		return result;
+	}
+	
+	//the two next functions are for test purposes :D dont read them :D
+	public static void printLists(List<List<Integer>> list){
+		System.out.println("printing the results list boolean search");
+		for(List<Integer> li : list){
+			for(Integer temp: li){
+				System.out.print(""+temp+",");
+			}
+			System.out.println("");
+		}
+	}
+	public static void printList(List<Integer> list){
+		System.out.println("printing list:");
+		for(Integer temp : list){
+			System.out.print(""+temp+", ");
+		}
+		System.out.println("");
 	}
 }

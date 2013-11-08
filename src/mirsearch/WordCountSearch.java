@@ -22,7 +22,7 @@ public class WordCountSearch {
 			List<Integer> temporalList = index.getPostingListNoFreq(term);
 			for(Integer docID: temporalList){
 				Integer totalCount = queryDoc.get(docID);
-				if( docID == null)
+				if( totalCount == null)
 					totalCount = 0;
 				totalCount++;
 				queryDoc.put(docID, totalCount);

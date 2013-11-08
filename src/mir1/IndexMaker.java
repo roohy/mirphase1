@@ -14,7 +14,7 @@ public class IndexMaker {
 	List<TermDoc> inputTD;
 	Map<String, IndexItem> index;
 	
-	IndexMaker(){
+	public IndexMaker(){
 		inputTD = null;
 		index = new HashMap<String,IndexItem>();
 	}
@@ -121,5 +121,8 @@ public class IndexMaker {
 		}
 		return results;
 	}
+	
+	//this is used for inner prodct porpuses
+	//public Map<Integer,Integer> getSinglePostingList(String  )
 
 }

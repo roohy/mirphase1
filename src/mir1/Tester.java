@@ -2,6 +2,9 @@ package mir1;
 
 import java.util.List;
 
+import mirsearch.BoolSearch;
+import mirsearch.SearchClass;
+
 public class Tester {
 	public static void main(String args[]){
 		ReadFile files = new ReadFile("/home/roohy/workspace/data");
@@ -27,5 +30,11 @@ public class Tester {
 		//now we print index to test the program
 		index.printIndex();
 		index.saveIndex("../hi.txt");
+		
+		
+		//here we instantiate a searcher class
+		SearchClass searcher = new SearchClass(index);
+		List<Integer> searchResults = searcher.searchIt("the only all chance", 10, 1);
+		BoolSearch.printList(searchResults);
 	}
 }

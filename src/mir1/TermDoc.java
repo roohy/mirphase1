@@ -5,7 +5,7 @@ public class TermDoc {
 	//String doc;
 	int docID;
 	
-	TermDoc(String t, int d){
+	public TermDoc(String t, int d){
 		term = t;
 		docID = d;
 	}

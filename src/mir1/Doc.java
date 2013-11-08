@@ -9,7 +9,7 @@ public class Doc {
 	String name;
 	List<Token> tokens;
 	int docID;
-	Doc(BufferedReader bf , String name, int ID){
+	public Doc(BufferedReader bf , String name, int ID){
 		this.buffer = bf;
 		this.name = name;
 		tokens = null;

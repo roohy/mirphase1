@@ -10,7 +10,7 @@ public class DocMap {
 	List<TermDoc> tdList;
 	
 	
-	DocMap(List<Doc> docs){
+	public DocMap(List<Doc> docs){
 		this.docs = docs;
 		
 	}
@@ -26,7 +26,7 @@ public class DocMap {
 
 		System.out.println("Making the Tokenizer");
 		//here we instantiate a tokenizer with passing null pointer as its doc
-		Tokenizer tokenizer = new Tokenizer(null, rules);
+		Tokenizer tokenizer = new Tokenizer("", rules);
 		
 		for( Doc doc: docs){
 			System.out.println("Document "+doc.name+" is starting to be tokenized");
