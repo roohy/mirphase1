@@ -26,6 +26,13 @@ public class IndexMaker implements Serializable{
 		docSet = new TreeSet<Integer>();
 	}
 	
+	public void stopWordTermination(String addr){
+		StopWord sWords = new StopWord();
+		List<String> stopTokens= sWords.getList(addr);
+		for(String st :stopTokens){
+			this.index.remove(st);
+		}
+	}
 	public void addTDList(List<TermDoc> list){
 		inputTD = list;
 	}

@@ -2,13 +2,16 @@ package mir1;
 
 import java.io.BufferedReader;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
 public class DocMap {
 	
 	List<Doc> docs;
 	List<TermDoc> tdList;
-	
+	List<TermDoc> bwList;
 	
 	public DocMap(List<Doc> docs){
 		this.docs = docs;
@@ -58,6 +61,50 @@ public class DocMap {
 			this.makeTermDocMap();
 		}
 		return tdList;
+	}
+	
+	public void makeBiwordList(int count){
+		this.bwList = new ArrayList<TermDoc>();
+		for( Doc doc: this.docs){
+			for( int i = 1 ; i<doc.tokens.size(); i++){
+				bwList.add(new TermDoc(doc.tokens.get(i)+" "+doc.tokens.get(i-1), doc.docID));
+			}
+		}
+		Map<String, Integer> occurences = new HashMap<String, Integer>();
+		for(TermDoc td: this.bwList){
+			Integer occ = occurences.get(td.term);
+			if(occ == null)
+				occ = 0;
+			occ++;
+			occurences.put(td.term, occ);
+		}
+		List<String> maxBiWords = DocMap.sortResults(occurences, count);
+	}
+	
+	
+	public static List<String> sortResults(Map<String,Integer> input, int count){
+		List<String> results = new ArrayList<String>();
+		for ( int i = 0 ; i < count ; i++){
+			String maxTerm = maxResult(input);
+			if( maxTerm == ""){
+				break;
+			}
+			results.add(maxTerm);
+			input.remove(maxTerm);
+		}
+		
+		return results;
+	}
+	
+	public static String maxResult(Map<String,Integer> input){
+		Entry<String, Integer> maxEntry = null;
+		for( Entry<String,Integer> temporal: input.entrySet()){
+			if(maxEntry == null || temporal.getValue() > maxEntry.getValue())
+				maxEntry = temporal;
+		}
+		if( maxEntry == null)
+			return "";
+		return maxEntry.getKey();
 	}
 	
 }
