@@ -9,6 +9,7 @@ import java.util.List;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
@@ -24,6 +25,7 @@ public class MainWindow extends JFrame implements ActionListener{
 	private JRadioButton  addToIndex; 
 	private JRadioButton  indexer;
 	private JRadioButton  getDictionary;
+	private JRadioButton  retrieval;
 	private ButtonGroup group ; 
 	private JTextField tokenizer_inputFilePath ; 
 	private JTextField getDictionary_inputFilePath ; 
@@ -31,7 +33,10 @@ public class MainWindow extends JFrame implements ActionListener{
 	private JTextArea text_area ; 
 	private JCheckBox biWord ; 
 	private JCheckBox stopWord ;
-	private JTextField biword_count ; 
+	private JTextField biword_count ;
+	private JComboBox retrieval_options ; 
+	private JTextField retrieval_max ; 
+	private JComboBox retrieval_model ; 
 	
 	private MasterClass master ; 
 	public MainWindow(){
@@ -55,6 +60,14 @@ public class MainWindow extends JFrame implements ActionListener{
 		tokenizer.addActionListener(this);
 		tokenizer.setSelected(true);
 		this.add(tokenizer);
+		
+		tokenizer_inputFilePath = new JTextField(); 
+		tokenizer_inputFilePath.setSize(150, 25);
+		tokenizer_inputFilePath.setLocation(140, 80);
+		tokenizer_inputFilePath.setLayout(null);
+		tokenizer_inputFilePath.setVisible(true);
+		tokenizer_inputFilePath.setText("Data/Docs/doc1");
+		this.getLayeredPane(). add(tokenizer_inputFilePath);
 		
 		addToIndex = new JRadioButton("Add To Index");
 		addToIndex.setLocation(30, 140);
@@ -82,19 +95,42 @@ public class MainWindow extends JFrame implements ActionListener{
 		getDictionary_inputFilePath.setText("Data/Docs");
 		this.getLayeredPane(). add(getDictionary_inputFilePath);
 		
+		retrieval = new JRadioButton("Retrieval");
+		retrieval.setSize(100, 30);
+		retrieval.setLocation(30, 320);
+		retrieval.addActionListener(this) ;
+		this.add(retrieval);
+		
+		String [] ops = {"Index" , "Directory" } ; 
+		retrieval_options = new JComboBox(ops);
+		retrieval_options.setSelectedIndex(0) ; 
+		retrieval_options.setSize(60 , 20) ; 
+		retrieval_options.setLocation(140, 320);
+		this.getLayeredPane().add(retrieval_options);
+		
+		retrieval_max = new JTextField(); 
+		retrieval_max.setSize(50, 25);
+		retrieval_max.setLocation(330, 320);
+		retrieval_max.setLayout(null);
+		retrieval_max.setVisible(true);
+		retrieval_max.setText("Data/Docs");
+		this.getLayeredPane(). add(retrieval_max);
+		
+		String [] ops2 = {"Boolean" , "WordCount" } ; 
+		retrieval_options = new JComboBox(ops2);
+		retrieval_options.setSelectedIndex(0) ; 
+		retrieval_options.setSize(80 , 20) ; 
+		retrieval_options.setLocation(220, 320);
+		this.getLayeredPane().add(retrieval_options);
+		
+
 		group = new ButtonGroup();
 	    group.add(tokenizer);
 		group.add(addToIndex);
 		group.add(indexer);
 		group.add(getDictionary);
-		
-		tokenizer_inputFilePath = new JTextField(); 
-		tokenizer_inputFilePath.setSize(150, 25);
-		tokenizer_inputFilePath.setLocation(140, 80);
-		tokenizer_inputFilePath.setLayout(null);
-		tokenizer_inputFilePath.setVisible(true);
-		tokenizer_inputFilePath.setText("Data/Docs/doc1");
-		this.getLayeredPane(). add(tokenizer_inputFilePath);
+		group.add(retrieval);
+
 		
 		go = new JButton("Go!"); 
 		go.setSize(130 , 55 ); 
