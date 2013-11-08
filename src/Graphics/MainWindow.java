@@ -1,14 +1,16 @@
 package Graphics;
 
+import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
+import java.io.File;
+import java.util.List;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JRadioButton;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
@@ -22,6 +24,7 @@ public class MainWindow extends JFrame implements ActionListener{
 	private JRadioButton  getDictionary;
 	private ButtonGroup group ; 
 	private JTextField tokenizer_inputFilePath ; 
+	private JTextField getDictionary_inputFilePath ; 
 	private JButton go ; 
 	private JTextArea text_area ; 
 	
@@ -66,6 +69,14 @@ public class MainWindow extends JFrame implements ActionListener{
 		getDictionary.addActionListener(this) ;
 		this.add(getDictionary);
 	
+		getDictionary_inputFilePath = new JTextField(); 
+		getDictionary_inputFilePath.setSize(150, 25);
+		getDictionary_inputFilePath.setLocation(140, 220);
+		getDictionary_inputFilePath.setLayout(null);
+		getDictionary_inputFilePath.setVisible(true);
+		getDictionary_inputFilePath.setText("Data/Docs");
+		this.getLayeredPane(). add(getDictionary_inputFilePath);
+		
 		group = new ButtonGroup();
 	    group.add(tokenizer);
 		group.add(addToIndex);
@@ -77,8 +88,11 @@ public class MainWindow extends JFrame implements ActionListener{
 		tokenizer_inputFilePath.setLocation(140, 40);
 		tokenizer_inputFilePath.setLayout(null);
 		tokenizer_inputFilePath.setVisible(true);
-		tokenizer_inputFilePath.setText("Data/Docs/");
+		tokenizer_inputFilePath.setText("Data/Docs/doc1");
 		this.getLayeredPane(). add(tokenizer_inputFilePath);
+		
+		
+		
 		
 		go = new JButton("Go!"); 
 		go.setSize(130 , 55 ); 
@@ -87,13 +101,18 @@ public class MainWindow extends JFrame implements ActionListener{
 		this.add(go); 
 		
 		text_area = new JTextArea() ; 
-		text_area.setSize(300, 650); 
+		text_area.setSize(300, 600); 
 		text_area.setLocation(450, 40) ;
 		text_area.setVisible(true);
 	//TODO	text_area.setBorder()
 		text_area.setText("slkfdasldkfjas;fl");
 		this.getLayeredPane().add(text_area);
 		
+		JScrollPane jp = new JScrollPane(text_area);
+		jp.setVisible(true);
+		jp.setSize(330 , 600);
+		jp.setLocation(450,  40) ;
+        add(jp, BorderLayout.CENTER);
 		
 	}
 
@@ -102,6 +121,17 @@ public class MainWindow extends JFrame implements ActionListener{
 		if ( e.getSource() == go){
 			System.out.println("dasf");
 			if ( tokenizer.isSelected()){
+				File file = new File(tokenizer_inputFilePath.getText());
+				List<String> list = master.generateTokens(file) ; 
+				String result = "" ; 
+				for( String k : list) 
+					result += k + "\n" ; 
+				text_area.setText(result) ;
+			}
+			
+			if ( getDictionary.isSelected()){
+				
+				
 				
 			}
 			
