@@ -96,6 +96,60 @@ public class MasterClass {
 	public void savePostingList(String addr){
 		this.index.saveIndex(addr);
 	}
+	public IndexItem getTermPostingList(String term){
+		return this.index.getIndexItem(term);
+	}
+	public List<String> getBiwords(String addr , int maxBiwords){
+		ReadFile files = new ReadFile(addr);
+		List<Doc> docs = files.getDocsBuffers();
+		DocMap mapper = new DocMap(docs);
+		mapper.mapIt();//mapping the term doc list
+		
+		//at this line we get a list of docs whose tokens fields are filled with their tokens
+		docs = mapper.getMappedDocs();
+		
+		//making index;
+
+		IndexMaker index = new IndexMaker();
+		List<TermDoc> tdList = null;
+		List<TermDoc> bdList = null;
+		List<String> bdTerms = null;
+		
+		tdList = mapper.getTermDocMap();
+		mapper.makeBiwordList(maxBiwords);
+		bdList = mapper.bwList;
+		bdTerms = mapper.bwTerms;
+		//index.addTDList(tdList);
+		//index.compileList();
+		//index.supportBiwords(bdTerms, bdList);
+		return bdTerms;
+	}
+	
+	public List<IndexItem> getBiwordDocs(String addr , int maxBiwords){
+		ReadFile files = new ReadFile(addr);
+		List<Doc> docs = files.getDocsBuffers();
+		DocMap mapper = new DocMap(docs);
+		mapper.mapIt();//mapping the term doc list
+		
+		//at this line we get a list of docs whose tokens fields are filled with their tokens
+		docs = mapper.getMappedDocs();
+		
+		//making index;
+
+		IndexMaker index = new IndexMaker();
+		List<TermDoc> tdList = null;
+		List<TermDoc> bdList = null;
+		List<String> bdTerms = null;
+		
+		tdList = mapper.getTermDocMap();
+		mapper.makeBiwordList(maxBiwords);
+		bdList = mapper.bwList;
+		bdTerms = mapper.bwTerms;
+		index.addTDList(tdList);
+		index.compileList();
+		index.supportBiwords(bdTerms, bdList);
+		return index.getBiwordPosting();
+	}
 	/*
 	public List<String> generateDictionary(String addr){
 		

@@ -174,12 +174,17 @@ public class IndexMaker implements Serializable{
 		}
 		return item.getPostingListComplete();
 	}
+	
+	public IndexItem getIndexItem(String term){
+		return index.get(term);
+	}
 	public int getDocFrequency(String term){
 		IndexItem item= this.index.get(term);
 		if( item == null)
 			return 0;
 		return item.DocFreq;
 	}
+	
 	
 	//this function update doc length map
 	//which contains vector length of docs so we can use it in our cosine vector search;)
@@ -205,6 +210,17 @@ public class IndexMaker implements Serializable{
 	}
 	public Double getDocLength(Integer key){
 		Double result = this.docLength.get(key);
+		return result;
+	}
+	
+	public List<IndexItem> getBiwordPosting(){
+		List<IndexItem> result = new ArrayList<IndexItem>();
+		for(String st: this.biwordTerms){
+			IndexItem temporal = this.index.get(st);
+			if (temporal == null)
+				continue;
+			result.add(temporal);
+		}
 		return result;
 	}
 }
