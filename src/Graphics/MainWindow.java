@@ -8,6 +8,7 @@ import java.util.List;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
@@ -15,6 +16,7 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 import mir1.MasterClass;
+import mir1.StopWord;
 
 public class MainWindow extends JFrame implements ActionListener{
 	
@@ -27,6 +29,9 @@ public class MainWindow extends JFrame implements ActionListener{
 	private JTextField getDictionary_inputFilePath ; 
 	private JButton go ; 
 	private JTextArea text_area ; 
+	private JCheckBox biWord ; 
+	private JCheckBox stopWord ;
+	private JTextField biword_count ; 
 	
 	private MasterClass master ; 
 	public MainWindow(){
@@ -45,33 +50,33 @@ public class MainWindow extends JFrame implements ActionListener{
 		
 		
 		tokenizer = new JRadioButton("Tokenizer");
-		tokenizer.setLocation(30, 40);
+		tokenizer.setLocation(30, 80);
 		tokenizer.setSize(100, 30);
 		tokenizer.addActionListener(this);
 		tokenizer.setSelected(true);
 		this.add(tokenizer);
 		
 		addToIndex = new JRadioButton("Add To Index");
-		addToIndex.setLocation(30, 100);
+		addToIndex.setLocation(30, 140);
 		addToIndex.setSize(100, 30); 
 		addToIndex.addActionListener(this) ;
 		this.add(addToIndex);
 		
 		indexer = new JRadioButton("Make Index");
 		indexer.setSize(100, 30);
-		indexer.setLocation(30, 160);
+		indexer.setLocation(30, 200);
 		indexer.addActionListener(this) ;
 		this.add(indexer);
 	
 		getDictionary = new JRadioButton("getDictionary");
 		getDictionary.setSize(100, 30);
-		getDictionary.setLocation(30, 220);
+		getDictionary.setLocation(30, 260);
 		getDictionary.addActionListener(this) ;
 		this.add(getDictionary);
 	
 		getDictionary_inputFilePath = new JTextField(); 
 		getDictionary_inputFilePath.setSize(150, 25);
-		getDictionary_inputFilePath.setLocation(140, 220);
+		getDictionary_inputFilePath.setLocation(140, 260);
 		getDictionary_inputFilePath.setLayout(null);
 		getDictionary_inputFilePath.setVisible(true);
 		getDictionary_inputFilePath.setText("Data/Docs");
@@ -85,20 +90,17 @@ public class MainWindow extends JFrame implements ActionListener{
 		
 		tokenizer_inputFilePath = new JTextField(); 
 		tokenizer_inputFilePath.setSize(150, 25);
-		tokenizer_inputFilePath.setLocation(140, 40);
+		tokenizer_inputFilePath.setLocation(140, 80);
 		tokenizer_inputFilePath.setLayout(null);
 		tokenizer_inputFilePath.setVisible(true);
 		tokenizer_inputFilePath.setText("Data/Docs/doc1");
 		this.getLayeredPane(). add(tokenizer_inputFilePath);
 		
-		
-		
-		
 		go = new JButton("Go!"); 
 		go.setSize(130 , 55 ); 
 		go.setLocation(350, 530); 
 		go.addActionListener(this);
-		this.add(go); 
+		this.getLayeredPane().add(go); 
 		
 		text_area = new JTextArea() ; 
 		text_area.setSize(300, 600); 
@@ -114,6 +116,25 @@ public class MainWindow extends JFrame implements ActionListener{
 		jp.setLocation(450,  40) ;
         add(jp, BorderLayout.CENTER);
 		
+        stopWord = new JCheckBox("Stop Word");
+        stopWord.setSize(100, 30);
+        stopWord.setLocation(50, 30) ;
+        this.getLayeredPane().add(stopWord);
+     
+        biWord = new JCheckBox("Biword");
+        biWord.setSize(80, 30);
+        biWord.setLocation(200, 30) ;
+        biWord.addActionListener(this);
+        this.getLayeredPane().add(biWord);
+        
+        biword_count = new JTextField(); 
+		biword_count.setSize(50, 25);
+		biword_count.setLocation(290, 30);
+		biword_count.setLayout(null);
+		biword_count.setVisible(true);
+		biword_count.setText("1000");
+		biword_count.setEnabled(false);
+		this.getLayeredPane(). add(biword_count);
 	}
 
 	@Override
@@ -134,8 +155,9 @@ public class MainWindow extends JFrame implements ActionListener{
 				
 				
 			}
-			
-			return ; 
+		}
+		if ( e.getSource() == biWord){
+			biword_count.setEnabled(biWord.isSelected());
 		}
 	}
 	
