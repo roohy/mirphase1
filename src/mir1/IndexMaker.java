@@ -18,12 +18,35 @@ public class IndexMaker implements Serializable{
 	List<TermDoc> inputTD;
 	Map<String, IndexItem> index;
 	int docNumber;
+	
+	//for supporting biwords
+	int biWordSupport;
+	List<String> biwordTerms;
+	
+	
 	Set<Integer> docSet;
 	Map<Integer,Double> docLength;
 	public IndexMaker(){
 		inputTD = null;
 		index = new HashMap<String,IndexItem>();
 		docSet = new TreeSet<Integer>();
+		this.biWordSupport = 0;
+	}
+	
+	public boolean doesSupportBiwords(){
+		return (biWordSupport == 1);
+	}
+	public void supportBiwords(List<String> inputTerms,List<TermDoc> newTD){
+		this.biWordSupport = 1;
+		this.biwordTerms = inputTerms;
+		this.addTDList(newTD);
+		this.compileList();
+	}
+	public boolean checkBiword(String term){
+		if ( !doesSupportBiwords()){
+			return false;
+		}
+		return this.biwordTerms.contains(term);
 	}
 	
 	public void stopWordTermination(String addr){

@@ -45,7 +45,33 @@ public class SearchClass {
 		Tokenizer tokenizer = new Tokenizer(query,rules);
 		tokenizer.Tokenize();//tokenizing the query
 		this.queryTokens = tokenizer.getTokens();
+		if(index.doesSupportBiwords()){
+			this.checkBiwords();
+		}
 		
+	}
+	
+	
+	public void checkBiwords(){
+		List<Token> tempList = new ArrayList<Token>();
+		List<Integer> toDeleteList = new ArrayList<Integer>();
+		for( int i = 1 ;i< this.queryTokens.size(); i++){
+			if(this.index.checkBiword(this.queryTokens.get(i).getContent()+" "
+				+this.queryTokens.get(i).getContent() )){
+				tempList.add(new Token("haha"
+						,this.queryTokens.get(i).getContent()+" "
+								+this.queryTokens.get(i).getContent()));
+				toDeleteList.add(i);
+				i++;
+			}
+		}
+		for(int i = toDeleteList.size()-1 ; i> -1 ; i--){
+			this.queryTokens.remove(toDeleteList.get(i));
+			this.queryTokens.remove(toDeleteList.get(i)-1);
+		}
+		for( Token t:tempList){
+			queryTokens.add(t);
+		}
 	}
 	
 	//tokens list may contain duplicates elements but in first three search options we dont 

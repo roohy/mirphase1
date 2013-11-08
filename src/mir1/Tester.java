@@ -36,7 +36,7 @@ public class Tester {
 		
 		//here we instantiate a searcher class
 		SearchClass searcher = new SearchClass(index);
-		List<Integer> searchResults = searcher.searchIt("high hopes great britain", 10, 3);
+		List<Integer> searchResults = searcher.searchIt("CEREMONIAL SUICIDES COMMITTED BY SOME BUDDHIST MONKS IN SOUTH VIET NAMAND WHAT THEY ARE SEEKING TO GAIN BYSUCH ACTS .", 30, 2);
 		if( searchResults == null){
 			System.out.println("Search Rsesult list is null oh godddd");
 		}

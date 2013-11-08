@@ -12,6 +12,7 @@ public class DocMap {
 	List<Doc> docs;
 	List<TermDoc> tdList;
 	List<TermDoc> bwList;
+	List<String> bwTerms;
 	
 	public DocMap(List<Doc> docs){
 		this.docs = docs;
@@ -79,7 +80,17 @@ public class DocMap {
 			occurences.put(td.term, occ);
 		}
 		List<String> maxBiWords = DocMap.sortResults(occurences, count);
-		for()
+		this.saveBiwords(maxBiWords);
+		this.bwTerms = maxBiWords;
+	}
+	
+	
+	public void saveBiwords(List<String> valids){
+		for(int i = 0 ; i<bwList.size(); i++){
+			if(!valids.contains(bwList.get(i))){
+				bwList.remove(i);
+			}
+		}
 	}
 	
 	
