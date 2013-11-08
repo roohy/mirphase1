@@ -40,7 +40,9 @@ public class SearchClass {
 //		queryTokens = new ArrayList<Token>();
 		//System.out.println("Making Rules...");
 		//Adding rules to this list makes applys them in tokenization proccess
-		rules.add(new Rule("WORD","[A-Za-z]+"));
+		rules.add(new Rule("WORD","[A-Za-z\\.]+"));
+		rules.add(new Rule("URL","(https?)://[-.a-z0-9]+\\.[a-z]{2,3}(/[a-z0-9/-]*)?"));
+		rules.add(new Rule("Mail","[-.a-z0-9]+@[-.a-z0-9]+\\.[a-z]{2,3}"));
 		
 		Tokenizer tokenizer = new Tokenizer(query,rules);
 		tokenizer.Tokenize();//tokenizing the query

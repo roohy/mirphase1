@@ -69,6 +69,9 @@ public class Tokenizer {
 					for (Rule rule: rules){
 						if(matcher.usePattern(rule.pattern).lookingAt()){
 							System.out.print("Matcher: "+matcher.group()+"||||");
+							if(matcher.group() == "."){
+								continue;
+							}
 							this.tokensList.add(new Token(rule.name,matcher.group()));
 							pos = matcher.end();
 							break;

@@ -25,8 +25,9 @@ public class DocMap {
 		
 		System.out.println("Making Rules...");
 		//Adding rules to this list makes applys them in tokenization proccess
-		rules.add(new Rule("WORD","[A-Za-z]+"));
-		
+		rules.add(new Rule("WORD","[A-Za-z0-9\\.]+"));
+		rules.add(new Rule("URL","(https?)://[-.a-z0-9]+\\.[a-z]{2,3}(/[a-z0-9/-]*)?"));
+		rules.add(new Rule("Mail","[-.a-z0-9]+@[-.a-z0-9]+\\.[a-z]{2,3}"));
 
 		System.out.println("Making the Tokenizer");
 		//here we instantiate a tokenizer with passing null pointer as its doc
