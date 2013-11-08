@@ -11,8 +11,8 @@ public class DocMap {
 	
 	List<Doc> docs;
 	List<TermDoc> tdList;
-	List<TermDoc> bwList;
-	List<String> bwTerms;
+	public List<TermDoc> bwList;
+	public List<String> bwTerms;
 	
 	public DocMap(List<Doc> docs){
 		this.docs = docs;
