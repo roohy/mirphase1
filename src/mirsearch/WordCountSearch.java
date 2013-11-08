@@ -6,11 +6,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import mir1.Indexer;
+import mir1.IndexMaker;
 
 public class WordCountSearch {
-	Indexer index;
-	public WordCountSearch(Indexer index) {
+	IndexMaker index;
+	public WordCountSearch(IndexMaker index) {
 		this.index = index;
 	}
 	
@@ -20,6 +20,9 @@ public class WordCountSearch {
 		Map<Integer,Integer> queryDoc = new HashMap<Integer,Integer>();
 		for (String term : terms){
 			List<Integer> temporalList = index.getPostingListNoFreq(term);
+			if(temporalList == null){
+				continue;
+			}
 			for(Integer docID: temporalList){
 				Integer totalCount = queryDoc.get(docID);
 				if( totalCount == null)

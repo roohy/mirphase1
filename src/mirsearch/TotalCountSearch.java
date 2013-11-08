@@ -6,12 +6,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import mir1.Indexer;
+import mir1.IndexMaker;
 
 public class TotalCountSearch {
-	Indexer index;
+	IndexMaker index;
 	
-	public TotalCountSearch(Indexer index) {
+	public TotalCountSearch(IndexMaker index) {
 		this.index = index;
 	}
 	

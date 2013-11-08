@@ -12,7 +12,7 @@ import java.util.Map;
 
 import mir1.Doc;
 import mir1.DocMap;
-import mir1.Indexer;
+import mir1.IndexMaker;
 import mir1.ReadFile;
 import mir1.TermDoc;
 import mirsearch.SearchClass;
@@ -43,7 +43,7 @@ public class Evalulator {
 	
 	private void buildMap() throws NumberFormatException, IOException {
 		// TODO Auto-generated method stub
-		BufferedReader br = new BufferedReader(new FileReader(new File("Data/Relevancy/relevance")));
+		BufferedReader br = new BufferedReader(new FileReader(new File(answerAddress)));
 		String line ; 
 		while((line= br.readLine())!=null){
 			if ( line.equals(""))
@@ -61,7 +61,7 @@ public class Evalulator {
 	}
 
 	public void eval () throws FileNotFoundException{
-		Indexer index = getIndex() ; 
+		IndexMaker index = getIndex() ; 
 		searcher = new SearchClass(index);
 		for( int i = 0 ; i < 3 ; i++){
 			for (Query q : querys) {
@@ -105,7 +105,7 @@ public class Evalulator {
 		return null ;
 	}
 
-	private Indexer getIndex(){
+	private IndexMaker getIndex(){
 		ReadFile files = new ReadFile(docsPrefix);
 		List<Doc> docs = files.getDocsBuffers();
 		DocMap mapper = new DocMap(docs);
@@ -119,7 +119,7 @@ public class Evalulator {
 		 */
 		List<TermDoc> tdList = mapper.getTermDocMap();
 		
-		Indexer index = new Indexer();
+		IndexMaker index = new IndexMaker();
 		//first we add the list as a new list to indexer we can do this multiple time 
 		index.addTDList(tdList);
 		//then we compile the list into the index, we have to do this every time we add a new td list

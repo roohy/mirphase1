@@ -1,6 +1,8 @@
 package mir1;
 
-public class TermDoc {
+import java.io.Serializable;
+
+public class TermDoc implements Serializable{
 	String term;
 	//String doc;
 	int docID;

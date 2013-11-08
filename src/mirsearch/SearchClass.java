@@ -9,25 +9,30 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import mir1.Indexer;
+import mir1.IndexMaker;
 import mir1.Token;
 import mir1.Tokenizer;
 import mir1.Rule;
 
 public class SearchClass {
-	Indexer index;
+	IndexMaker index;
 	BoolSearch bSearcher;
 	TotalCountSearch tCountSearcher;
 	WordCountSearch wCountSearcher;
+	InnerProductSearch innerPSearch;
+	CosineSearch coSearch;
 	List<Token> queryTokens;
 	
 	
-	public SearchClass(Indexer input) {
+	public SearchClass(IndexMaker input) {
 		// TODO Auto-generated constructor stub
 		this.index = input;
+		this.index.updateDocLength();
 		this.bSearcher = new BoolSearch(index);
 		this.tCountSearcher = new TotalCountSearch(index);
 		this.wCountSearcher = new WordCountSearch(index);
+		this.innerPSearch = new InnerProductSearch(index);
+		this.coSearch = new CosineSearch(index);
 	}
 	
 	public void tokenizeQuery(String query){
@@ -69,7 +74,7 @@ public class SearchClass {
 				temp = 0;
 			temp++;
 			result.put(t.getContent(), temp);
-			
+			System.out.println("updating query vector "+t.getContent()+" to "+temp);
 		}
 		return result;
 	}
@@ -93,7 +98,15 @@ public class SearchClass {
 		case 2:
 			removeDuplicates();
 			result = tCountSearcher.searchIt(this.queryTerms(), maxLen);
+			break;
+		case 3:
+			result = innerPSearch.searchIt(this.queryVector(), maxLen);
+			break;
+		case 4:
+			result = coSearch.searchIt(this.queryVector(), maxLen);
+			break;
 		default:
+			System.out.println("Search Query Type is So Wrong I will Throw an exception");
 			result = null;
 			break;
 		}

@@ -57,8 +57,6 @@ public class ReadFile {
     public static List<File> listf(String directoryName) {
         File directory = new File(directoryName);
 
-        System.out.println("here----------- " + directory.isFile());
-        
         List<File> resultList = new ArrayList<File>();
 
         // get all the files from a directory

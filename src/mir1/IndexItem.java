@@ -2,6 +2,7 @@ package mir1;
 
 import java.io.BufferedWriter;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -9,7 +10,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-public class IndexItem {
+public class IndexItem implements Serializable{
 	String name;
 	int DocFreq;
 	Map<Integer,Integer> docs;
@@ -21,7 +22,7 @@ public class IndexItem {
 		// TODO Auto-generated constructor stub
 	}
 	
-	public void addDoc(int docName){
+	public void incrementDoc(int docName){
 		Integer temp = docs.get(docName);
 		if( temp != null){
 			temp += 1;
