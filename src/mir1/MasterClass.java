@@ -70,7 +70,7 @@ public class MasterClass {
 		List<String> result =  new ArrayList<String>();
 		try{
 			BufferedReader bf = new BufferedReader(new FileReader(file));
-			Doc d = new Doc(bf, "HAHA", 1);
+			Doc d = new Doc(bf, "new Doc", 1);
 			List<Doc> docs = new ArrayList<Doc>();
 			docs.add(d);
 			DocMap mapper = new DocMap(docs);
