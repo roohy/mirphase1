@@ -4,17 +4,20 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+
 import mir1.IndexMaker;
 
 public class BoolSearch {
 	IndexMaker index;
 	public BoolSearch(IndexMaker input) {
+
 		index = input;
 	}
 	public List<Integer> searchIt(List<String> terms,int maxLen){
 		List<Integer> result = new ArrayList<Integer>();
 		List<List<Integer>> list = new ArrayList<List<Integer>>();
 		for(String term : terms){
+
 			List<Integer> tempList = this.index.getPostingListNoFreq(term);
 			if(tempList == null)
 				continue;

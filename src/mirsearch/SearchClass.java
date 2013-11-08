@@ -89,7 +89,7 @@ public class SearchClass {
 		switch(searchType){ //TODO implement this after implementig query tokenizin subsystem
 		case 0:
 			removeDuplicates();
-			result = bSearcher.searchIt(this.queryTerms(), maxLen);
+			result = bSearcher.searchIt(this.queryTerms(), Integer.MAX_VALUE);
 			break;
 		case 1:
 			removeDuplicates();

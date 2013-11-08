@@ -42,7 +42,7 @@ public class ReadFile {
 					result.add( new Doc (new BufferedReader(new FileReader(file)),file.getAbsolutePath(),fileID));
 					
 				}catch(IOException e){
-					System.out.println("Got Stock in adding a file to buffered reader stack");
+					System.out.println("Got Stock in adding a file to buffered reader stack!!");
 					e.printStackTrace();
 				}
 			}

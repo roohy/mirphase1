@@ -7,9 +7,9 @@ import mirsearch.SearchClass;
 
 public class Tester {
 	public static void main(String args[]){
-		ReadFile files = new ReadFile("/home/roohy/workspace/data");
 		
-		
+
+		ReadFile files = new ReadFile("Data/Docs");
 		List<Doc> docs = files.getDocsBuffers();
 		DocMap mapper = new DocMap(docs);
 		mapper.mapIt();//mapping the term doc list
