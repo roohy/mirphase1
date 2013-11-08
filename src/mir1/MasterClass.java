@@ -152,6 +152,9 @@ public class MasterClass {
 	}
 	public List<Integer> retrievalFromFile(String addr ,String query, int maxCount,int searchType ){
 		this.loadIndex(addr);
+		if (this.searcher == null){
+			this.searcher = new SearchClass(this.index);
+		}
 		return this.Search(query, maxCount, searchType);
 	}
 	
