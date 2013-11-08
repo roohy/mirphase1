@@ -150,6 +150,17 @@ public class MasterClass {
 		index.supportBiwords(bdTerms, bdList);
 		return index.getBiwordPosting();
 	}
+	public List<Integer> retrievalFromFile(String addr ,String query, int maxCount,int searchType ){
+		this.loadIndex(addr);
+		return this.Search(query, maxCount, searchType);
+	}
+	
+	public List<Integer> retrievalFromDocs(String docAddr, boolean stopWord , String stopWrodsDoc
+			,boolean biwordSupport, int maxBiwordCount,String query, int maxCount,int searchType){
+		this.index = null;
+		this.makeIndex(docAddr, stopWord, stopWrodsDoc, biwordSupport, maxBiwordCount);
+		return this.Search(query, maxCount, searchType);
+	}
 	/*
 	public List<String> generateDictionary(String addr){
 		
