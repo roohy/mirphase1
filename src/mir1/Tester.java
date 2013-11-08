@@ -29,8 +29,10 @@ public class Tester {
 		index.compileList();
 		//now we print index to test the program
 		index.printIndex();
-		index.saveIndex("../hi.txt");
-		
+		index.saveIndex("../hi.txt");//this just saves a text file if you want to save or load actually
+		//plase use saveindex from indexsaver class :D 
+		//IndexSaver.saveIndex(index, "../ind.txt");
+		//index = IndexSaver.loadIndex("../ind.txt");
 		
 		//here we instantiate a searcher class
 		SearchClass searcher = new SearchClass(index);
