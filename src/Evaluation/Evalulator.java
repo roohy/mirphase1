@@ -63,7 +63,7 @@ public class Evalulator {
 	public void eval () throws FileNotFoundException{
 		IndexMaker index = getIndex() ; 
 		searcher = new SearchClass(index);
-		for( int i = 0 ; i < 3 ; i++){
+		for( int i = 0 ; i < 1 ; i++){
 			for (Query q : querys) {
 				List<Integer> searchResults = searcher.searchIt(q.query, 20, i);
 				List<Integer> correctResults = queryAnswers.get(q.queryNum); 
