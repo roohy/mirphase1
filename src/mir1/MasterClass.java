@@ -90,6 +90,12 @@ public class MasterClass {
 	public void loadIndex(String addr){
 		this.index = IndexSaver.loadIndex(addr);
 	}
+	public void PrintPostingList(){
+		this.index.printIndex();
+	}
+	public void savePostingList(String addr){
+		this.index.saveIndex(addr);
+	}
 	/*
 	public List<String> generateDictionary(String addr){
 		
