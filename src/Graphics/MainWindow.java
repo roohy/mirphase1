@@ -59,7 +59,7 @@ public class MainWindow extends JFrame implements ActionListener{
 		tokenizer.setSize(100, 30);
 		tokenizer.addActionListener(this);
 		tokenizer.setSelected(true);
-		this.add(tokenizer);
+		this.getLayeredPane().add(tokenizer);
 		
 		tokenizer_inputFilePath = new JTextField(); 
 		tokenizer_inputFilePath.setSize(150, 25);
@@ -73,19 +73,19 @@ public class MainWindow extends JFrame implements ActionListener{
 		addToIndex.setLocation(30, 140);
 		addToIndex.setSize(100, 30); 
 		addToIndex.addActionListener(this) ;
-		this.add(addToIndex);
+		this.getLayeredPane().add(addToIndex);
 		
 		indexer = new JRadioButton("Make Index");
 		indexer.setSize(100, 30);
 		indexer.setLocation(30, 200);
 		indexer.addActionListener(this) ;
-		this.add(indexer);
+		this.getLayeredPane().add(indexer);
 	
 		getDictionary = new JRadioButton("getDictionary");
 		getDictionary.setSize(100, 30);
 		getDictionary.setLocation(30, 260);
 		getDictionary.addActionListener(this) ;
-		this.add(getDictionary);
+		this.getLayeredPane().add(getDictionary);
 	
 		getDictionary_inputFilePath = new JTextField(); 
 		getDictionary_inputFilePath.setSize(150, 25);
@@ -99,7 +99,7 @@ public class MainWindow extends JFrame implements ActionListener{
 		retrieval.setSize(100, 30);
 		retrieval.setLocation(30, 320);
 		retrieval.addActionListener(this) ;
-		this.add(retrieval);
+		this.getLayeredPane().add(retrieval);
 		
 		String [] ops = {"Index" , "Directory" } ; 
 		retrieval_options = new JComboBox(ops);
@@ -116,10 +116,10 @@ public class MainWindow extends JFrame implements ActionListener{
 		retrieval_max.setText("Data/Docs");
 		this.getLayeredPane(). add(retrieval_max);
 		
-		String [] ops2 = {"Boolean" , "WordCount" } ; 
+		String [] ops2 = {"Boolean" , "WordCount" , "Total Word Count" , "Inner Product" , "Cosine similarity" } ; 
 		retrieval_options = new JComboBox(ops2);
 		retrieval_options.setSelectedIndex(0) ; 
-		retrieval_options.setSize(80 , 20) ; 
+		retrieval_options.setSize(105 , 20) ; 
 		retrieval_options.setLocation(220, 320);
 		this.getLayeredPane().add(retrieval_options);
 		
