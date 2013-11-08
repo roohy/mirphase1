@@ -83,6 +83,13 @@ public class MasterClass {
 		return result;
 		
 	}
+	public void saveIndex(String addr){
+		IndexSaver.saveIndex(index, addr);
+	}
+	
+	public void loadIndex(String addr){
+		this.index = IndexSaver.loadIndex(addr);
+	}
 	/*
 	public List<String> generateDictionary(String addr){
 		
