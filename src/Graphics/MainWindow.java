@@ -266,6 +266,7 @@ public class MainWindow extends JFrame implements ActionListener{
 		group.add(retrieval);
 		group.add(getPostinglist) ;
 		group.add(evaluation) ;
+		group.add(frequentBiwords) ;
 
 		go = new JButton("Go!"); 
 		go.setSize(130 , 55 ); 
@@ -377,7 +378,17 @@ public class MainWindow extends JFrame implements ActionListener{
 				} 
 			}
 			else if (frequentBiwords.isSelected()){
+				System.out.println("testing+++++++++++++++++++++++++++++++++++++++++");
+				System.out.println(Integer.parseInt(biword_count.getText()));
+				List<IndexItem> list = master.getBiwordDocs(frequentBiwords_directory.getText(), Integer.parseInt(biword_count.getText()));
+				Collections.sort(list) ;
 				
+				String result = "" ; 
+				for ( int i = 0 ; i < Integer.parseInt(biword_count.getText()) ; i++){
+					result += list.get(i).getname() + " : " + list.get(i).getDocFreq() + "\n" ;
+				}
+				text_area.setText(result) ; 
+			
 			}
 		}
 		else if ( e.getSource() == biWord){

@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-public class IndexItem implements Serializable{
+public class IndexItem implements Serializable , Comparable<IndexItem>{
 	String name;
 	int DocFreq;
 	Map<Integer,Integer> docs;
@@ -34,6 +34,12 @@ public class IndexItem implements Serializable{
 		}
 	}
 	
+	public String getname(){
+		return this.name ; 
+	}
+	public int getDocFreq(){
+		return this.DocFreq ;
+	}
 	public String toString(){
 		String result = this.name + ": " ;
 		result += this.DocFreq + " - " ; 
@@ -94,6 +100,15 @@ public class IndexItem implements Serializable{
 	
 	public Map<Integer,Integer> getPostingListComplete(){
 		return this.docs;
+	}
+
+	@Override
+	public int compareTo(IndexItem o) {
+		if ( this.DocFreq > o.DocFreq)
+			return 1 ; 
+		if ( this.DocFreq <  o.DocFreq)
+			return -1 ; 
+		return 0;
 	}
 }
 
