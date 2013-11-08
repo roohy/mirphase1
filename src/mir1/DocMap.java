@@ -79,6 +79,7 @@ public class DocMap {
 			occurences.put(td.term, occ);
 		}
 		List<String> maxBiWords = DocMap.sortResults(occurences, count);
+		for()
 	}
 	
 	
