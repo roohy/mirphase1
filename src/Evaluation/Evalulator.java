@@ -59,21 +59,41 @@ public class Evalulator {
 				
         }
 	}
-
+	float precission  ,recall , average_precission ;  
 	public void eval () throws FileNotFoundException{
 		IndexMaker index = getIndex() ; 
 		searcher = new SearchClass(index);
-		for( int i = 0 ; i < 1 ; i++){
+		for( int i = 0 ; i < 4 ; i++){
+			precission = 0 ; recall = 0 ; average_precission = 0 ;  
 			for (Query q : querys) {
-				List<Integer> searchResults = searcher.searchIt(q.query, 20, i);
+				List<Integer> searchResults = searcher.searchIt(q.query, 30, i);
 				List<Integer> correctResults = queryAnswers.get(q.queryNum); 
-				System.out.println("search results: " + test(searchResults));
-				System.out.println("correct results: " + test(correctResults));
+				calculateCriterions(searchResults , correctResults) ; 	
+				System.err.println("i = "  + i +  "  search results: " + test(searchResults));
+				System.err.println("i = "  + i +  "  correct results: " + test(correctResults));
+				
 			}
+			System.err.println("Model " + i + " R= " + recall/querys.size() + " P= " + precission/querys.size() 
+					+ ((i==0)? "" : " MAP= " + (average_precission/querys.size())      ));
 		}
-		
 	}
 	
+	private void calculateCriterions(List<Integer> searchResults,
+			List<Integer> correctResults) {
+		float correct = 0 , a = 0 ;  
+		for(float i = 0 ; i < searchResults.size() ; i++){
+			if ( correctResults.contains(searchResults.get((int)i))){
+				correct++ ; 
+				a += correct/(i+1) ; 
+			}
+		}
+		precission += correct/((float)searchResults.size());
+		recall += correct/((float)correctResults.size());
+		average_precission += (a/ correct); 
+		
+		
+	}
+
 	private String test(List<Integer> a){
 		String result = "";
 		for ( Integer b : a){
