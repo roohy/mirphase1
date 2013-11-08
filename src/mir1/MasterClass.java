@@ -160,7 +160,32 @@ public class MasterClass {
 			,boolean biwordSupport, int maxBiwordCount,String query, int maxCount,int searchType){
 		this.index = null;
 		this.makeIndex(docAddr, stopWord, stopWrodsDoc, biwordSupport, maxBiwordCount);
-		return this.Search(query, maxCount, searchType);
+		return this.Search(query, maxCount, searchType); 
+	}
+	
+	public void addToIndex(String indexFile,String docDirectory){
+		this.loadIndex(indexFile);
+		
+		
+		ReadFile files = new ReadFile(docDirectory);
+		List<Doc> docs = files.getDocsBuffers();
+		DocMap mapper = new DocMap(docs);
+		mapper.mapIt();//mapping the term doc list
+		
+		//at this line we get a list of docs whose tokens fields are filled with their tokens
+		docs = mapper.getMappedDocs();
+		
+		//making index;
+		List<TermDoc> tdList = mapper.getTermDocMap();
+		index.addTDList(tdList);
+		index.compileList();
+		
+
+	}
+	public List<String> generateDictionary(String docsAddr){
+		this.index = null;
+		this.makeIndex(docsAddr, false, null, false, 0);
+		return this.getDictionary();
 	}
 	/*
 	public List<String> generateDictionary(String addr){
