@@ -12,12 +12,15 @@ public class MasterClass {
 	IndexMaker index ;
 	SearchClass searcher;
 	
+	
 	public IndexMaker getIndexMaker(){
 		return this.index;
 	}
 	
-	public IndexMaker makeIndex(String docAddr, boolean stopWord , String stopWrodsDoc
+	public IndexMaker makeIndex(String docAddr, boolean stopWord
 			,boolean biwordSupport, int maxBiwordCount){
+		
+		String stopWrodsDoc = "Data/Relevancy/relevance" ;
 		
 		ReadFile files = new ReadFile(docAddr);
 		List<Doc> docs = files.getDocsBuffers();
@@ -156,10 +159,10 @@ public class MasterClass {
 		return this.Search(query, maxCount, searchType);
 	}
 	
-	public List<Integer> retrievalFromDocs(String docAddr, boolean stopWord , String stopWrodsDoc
+	public List<Integer> retrievalFromDocs(String docAddr, boolean stopWord 
 			,boolean biwordSupport, int maxBiwordCount,String query, int maxCount,int searchType){
 		this.index = null;
-		this.makeIndex(docAddr, stopWord, stopWrodsDoc, biwordSupport, maxBiwordCount);
+		this.makeIndex(docAddr, stopWord, biwordSupport, maxBiwordCount);
 		return this.Search(query, maxCount, searchType); 
 	}
 	
@@ -184,7 +187,7 @@ public class MasterClass {
 	}
 	public List<String> generateDictionary(String docsAddr){
 		this.index = null;
-		this.makeIndex(docsAddr, false, null, false, 0);
+		this.makeIndex(docsAddr, false, false, 0);
 		return this.getDictionary();
 	}
 	/*

@@ -16,6 +16,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
+import mir1.IndexMaker;
 import mir1.MasterClass;
 import mir1.StopWord;
 
@@ -24,9 +25,12 @@ public class MainWindow extends JFrame implements ActionListener{
 	private JRadioButton tokenizer ; 
 	private JRadioButton  addToIndex;
 	private JTextField addToIndex_directory ; 
-	private JTextField addToIndex_name ; 
+	private JTextField addToIndex_indexfile ; 
 	
 	private JRadioButton  indexer;
+	private JTextField indexer_directory ; 
+	private JTextField indexer_indexfilename ;
+	
 	private JRadioButton  getDictionary;
 	private JRadioButton  retrieval;
 	private ButtonGroup group ; 
@@ -68,7 +72,7 @@ public class MainWindow extends JFrame implements ActionListener{
 		this.getLayeredPane().add(tokenizer);
 		
 		tokenizer_inputFilePath = new JTextField(); 
-		tokenizer_inputFilePath.setSize(150, 25);
+		tokenizer_inputFilePath.setSize(200, 25);
 		tokenizer_inputFilePath.setLocation(140, 80);
 		tokenizer_inputFilePath.setLayout(null);
 		tokenizer_inputFilePath.setVisible(true);
@@ -82,13 +86,20 @@ public class MainWindow extends JFrame implements ActionListener{
 		this.getLayeredPane().add(addToIndex);
 		
 		addToIndex_directory = new JTextField(); 
-		addToIndex_directory.setSize(50, 25);
-		addToIndex_directory.setLocation(330, 320);
+		addToIndex_directory.setSize(200, 25);
+		addToIndex_directory.setLocation(140, 140);
 		addToIndex_directory.setLayout(null);
 		addToIndex_directory.setVisible(true);
-		addToIndex_directory.setText("20");
+		addToIndex_directory.setText("Data/Docs");
 		this.getLayeredPane(). add(addToIndex_directory);
 		
+		addToIndex_indexfile = new JTextField(); 
+		addToIndex_indexfile.setSize(200, 25);
+		addToIndex_indexfile.setLocation(140, 170);
+		addToIndex_indexfile.setLayout(null);
+		addToIndex_indexfile.setVisible(true);
+		addToIndex_indexfile.setText("MyIndexes/index1");
+		this.getLayeredPane(). add(addToIndex_indexfile);
 		
 		
 		indexer = new JRadioButton("Make Index");
@@ -96,6 +107,26 @@ public class MainWindow extends JFrame implements ActionListener{
 		indexer.setLocation(30, 200);
 		indexer.addActionListener(this) ;
 		this.getLayeredPane().add(indexer);
+		
+		indexer_directory = new JTextField(); 
+		indexer_directory.setSize(200, 25);
+		indexer_directory.setLocation(140, 200);
+		indexer_directory.setLayout(null);
+		indexer_directory.setVisible(true);
+		indexer_directory.setText("Data/Docs");
+		this.getLayeredPane(). add(indexer_directory);
+		
+		indexer_indexfilename = new JTextField(); 
+		indexer_indexfilename.setSize(200, 25);
+		indexer_indexfilename.setLocation(140, 230);
+		indexer_indexfilename.setLayout(null);
+		indexer_indexfilename.setVisible(true);
+		indexer_indexfilename.setText("MyIndexes/index1");
+		this.getLayeredPane(). add(indexer_indexfilename);
+		
+		
+		
+		
 	
 		getDictionary = new JRadioButton("getDictionary");
 		getDictionary.setSize(100, 30);
@@ -104,7 +135,7 @@ public class MainWindow extends JFrame implements ActionListener{
 		this.getLayeredPane().add(getDictionary);
 	
 		getDictionary_inputFilePath = new JTextField(); 
-		getDictionary_inputFilePath.setSize(150, 25);
+		getDictionary_inputFilePath.setSize(200, 25);
 		getDictionary_inputFilePath.setLocation(140, 260);
 		getDictionary_inputFilePath.setLayout(null);
 		getDictionary_inputFilePath.setVisible(true);
@@ -212,7 +243,6 @@ public class MainWindow extends JFrame implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if ( e.getSource() == go){
-			System.out.println("dasf");
 			if ( tokenizer.isSelected()){
 				File file = new File(tokenizer_inputFilePath.getText());
 				List<String> list = master.generateTokens(file) ; 
@@ -222,9 +252,15 @@ public class MainWindow extends JFrame implements ActionListener{
 				text_area.setText(result) ;
 			}
 			
-			if ( getDictionary.isSelected()){
-				
-				
+			else if ( addToIndex.isSelected()){
+				master.addToIndex(addToIndex_indexfile.getText(), addToIndex_directory.getText()) ; 
+			}
+			else if ( indexer.isSelected()){
+				//public IndexMaker makeIndex(String docAddr, boolean stopWord 
+				//,boolean biwordSupport, int maxBiwordCount){
+				IndexMaker a = master.makeIndex(indexer_directory.getText(), stopWord.isSelected(), 
+						biWord.isSelected(), Integer.parseInt(biword_count.getText()));
+				master.saveIndex(indexer_indexfilename.getText());
 				
 			}
 		}
