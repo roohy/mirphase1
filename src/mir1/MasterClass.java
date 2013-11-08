@@ -62,7 +62,7 @@ public class MasterClass {
 	public List<Integer> Search(String query, int maxCount , int searchType ){
 		return this.searcher.searchIt(query, maxCount, searchType);
 	}
-	public List<String> getDictionary(){
+	private List<String> getDictionary(){
 		return index.getDictionary();
 	}
 	

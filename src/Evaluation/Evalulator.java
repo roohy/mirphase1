@@ -26,18 +26,25 @@ public class Evalulator {
 	Map <Integer , List<Integer>> queryAnswers ; 
 	ArrayList<Query> querys ; 
 	public Evalulator(String queryPrefix, String docsPrefix,
-			String answerAddress) throws NumberFormatException, IOException {
+			String answerAddress)  {
 		super();
 		this.queryPrefix = queryPrefix;
 		this.docsPrefix = docsPrefix;
 		this.answerAddress = answerAddress;
 		queryAnswers = new HashMap<Integer, List<Integer>>() ;
-		buildMap() ; 
-		getQuerys() ;
+		try {
+			buildMap() ;
+			getQuerys() ;
+			eval() ; 
+		} catch (NumberFormatException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
 		
-		for ( Query a : querys){
-			System.out.println("num: " + a.queryNum + " query: " + a.query);
-		}
+		
 		
 	}
 	
@@ -60,23 +67,27 @@ public class Evalulator {
         }
 	}
 	float precission  ,recall , average_precission ;  
-	public void eval () throws FileNotFoundException{
+	public String eval () throws FileNotFoundException{
+		String result = "" ; 
 		IndexMaker index = getIndex() ; 
 		searcher = new SearchClass(index);
 		for( int i = 0 ; i < 4 ; i++){
 			precission = 0 ; recall = 0 ; average_precission = 0 ;  
+			int max_num = ( i==0)? Integer.MAX_VALUE : 30 ; 
 			for (Query q : querys) {
-				List<Integer> searchResults = searcher.searchIt(q.query, 30, i);
+				List<Integer> searchResults = searcher.searchIt(q.query, max_num, i);
 				List<Integer> correctResults = queryAnswers.get(q.queryNum); 
 				calculateCriterions(searchResults , correctResults) ; 	
 				System.err.println("i = "  + i +  "  search results: " + test(searchResults));
 				System.err.println("i = "  + i +  "  correct results: " + test(correctResults));
 				
 			}
-			System.err.println("Model " + i + " R= " + recall/querys.size() + " P= " + precission/querys.size() 
-					+ ((i==0)? "" : " MAP= " + (average_precission/querys.size())      ));
+			result += ("Model " + i + " R= " + recall/querys.size() + " P= " + precission/querys.size() 
+					+ ((i==0)? "" : " MAP= " + (average_precission/querys.size())      ) + "\n");
 		}
+		return result ;
 	}
+	
 	
 	private void calculateCriterions(List<Integer> searchResults,
 			List<Integer> correctResults) {

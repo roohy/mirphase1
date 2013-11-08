@@ -4,6 +4,8 @@ import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Collections;
 import java.util.List;
 
 import javax.swing.ButtonGroup;
@@ -16,9 +18,11 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
+import Evaluation.Evalulator;
+
+import mir1.IndexItem;
 import mir1.IndexMaker;
 import mir1.MasterClass;
-import mir1.StopWord;
 
 public class MainWindow extends JFrame implements ActionListener{
 	
@@ -46,6 +50,15 @@ public class MainWindow extends JFrame implements ActionListener{
 	private JComboBox retrieval_model ; 
 	private JTextField retrieval_filePath; 
 	private JTextField retrieval_query; 
+	private JTextField getPostinglist_term ; 
+	private JRadioButton getPostinglist ; 
+	private JRadioButton evaluation ; 
+	private JTextField evaluation_docsPrefix ; 
+	private JTextField evaluation_querysPrefix ; 
+	private JTextField evaluation_answerAddress ; 
+	private JRadioButton frequentBiwords ; 
+	private JTextField frequentBiwords_maxnum ; 
+	private JTextField frequentBiwords_directory ; 
 	
 	
 	private MasterClass master ; 
@@ -58,8 +71,8 @@ public class MainWindow extends JFrame implements ActionListener{
 		
 		this.setTitle("SeachEngine!!!");
 		this.setLayout(null);
-		this.setLocation(400, 100);
-		this.setSize(800, 700);
+		this.setLocation(200, 100);
+		this.setSize(1200, 700);
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		this.setVisible(true);
 		
@@ -183,21 +196,77 @@ public class MainWindow extends JFrame implements ActionListener{
 		retrieval_query.setLocation(140, 380);
 		retrieval_query.setLayout(null);
 		retrieval_query.setVisible(true);
-		retrieval_query.setText("Data/Docs");
+		retrieval_query.setText("your query here");
 		this.getLayeredPane(). add(retrieval_query);
 		
+		getPostinglist = new JRadioButton("PostingList");
+		getPostinglist.setSize(100, 30);
+		getPostinglist.setLocation(30, 420);
+		getPostinglist.addActionListener(this) ;
+		this.getLayeredPane().add(getPostinglist);
+		
+		getPostinglist_term = new JTextField(); 
+		getPostinglist_term.setSize(200, 25);
+		getPostinglist_term.setLocation(140, 420);
+		getPostinglist_term.setLayout(null);
+		getPostinglist_term.setVisible(true);
+		getPostinglist_term.setText("your term here!");
+		this.getLayeredPane(). add(getPostinglist_term);
+		
+		evaluation = new JRadioButton("Evaluation");
+		evaluation.setSize(100, 30);
+		evaluation.setLocation(400, 80);
+		evaluation.addActionListener(this) ;
+		this.getLayeredPane().add(evaluation);
+		
+		evaluation_docsPrefix = new JTextField(); 
+		evaluation_docsPrefix.setSize(200, 25);
+		evaluation_docsPrefix.setLocation(510, 80);
+		evaluation_docsPrefix.setLayout(null);
+		evaluation_docsPrefix.setVisible(true);
+		evaluation_docsPrefix.setText("Data/Docs");
+		this.getLayeredPane(). add(evaluation_docsPrefix);
+		
+		evaluation_querysPrefix = new JTextField(); 
+		evaluation_querysPrefix.setSize(200, 25);
+		evaluation_querysPrefix.setLocation(510, 110);
+		evaluation_querysPrefix.setLayout(null);
+		evaluation_querysPrefix.setVisible(true);
+		evaluation_querysPrefix.setText("Data/Queries");
+		this.getLayeredPane(). add(evaluation_querysPrefix);
+		
+		evaluation_answerAddress = new JTextField(); 
+		evaluation_answerAddress.setSize(200, 25);
+		evaluation_answerAddress.setLocation(510, 140);
+		evaluation_answerAddress.setLayout(null);
+		evaluation_answerAddress.setVisible(true);
+		evaluation_answerAddress.setText("Data/Relevancy/relevance");
+		this.getLayeredPane(). add(evaluation_answerAddress);
+		
+		frequentBiwords = new JRadioButton("Freq. Biwords");
+		frequentBiwords.setSize(110, 30);
+		frequentBiwords.setLocation(400, 170);
+		frequentBiwords.addActionListener(this) ;
+		this.getLayeredPane().add(frequentBiwords);
+		
+		frequentBiwords_directory = new JTextField(); 
+		frequentBiwords_directory.setSize(200, 25);
+		frequentBiwords_directory.setLocation(510, 170);
+		frequentBiwords_directory.setLayout(null);
+		frequentBiwords_directory.setVisible(true);
+		frequentBiwords_directory.setText("Data/Docs");
+		this.getLayeredPane(). add(frequentBiwords_directory);
 		
 		
-		
-
 		group = new ButtonGroup();
 	    group.add(tokenizer);
 		group.add(addToIndex);
 		group.add(indexer);
 		group.add(getDictionary);
 		group.add(retrieval);
+		group.add(getPostinglist) ;
+		group.add(evaluation) ;
 
-		
 		go = new JButton("Go!"); 
 		go.setSize(130 , 55 ); 
 		go.setLocation(350, 530); 
@@ -206,7 +275,7 @@ public class MainWindow extends JFrame implements ActionListener{
 		
 		text_area = new JTextArea() ; 
 		text_area.setSize(300, 600); 
-		text_area.setLocation(450, 40) ;
+		text_area.setLocation(850, 40) ;
 		text_area.setVisible(true);
 	//TODO	text_area.setBorder()
 		text_area.setText("slkfdasldkfjas;fl");
@@ -215,7 +284,7 @@ public class MainWindow extends JFrame implements ActionListener{
 		JScrollPane jp = new JScrollPane(text_area);
 		jp.setVisible(true);
 		jp.setSize(330 , 600);
-		jp.setLocation(450,  40) ;
+		jp.setLocation(850,  40) ;
         add(jp, BorderLayout.CENTER);
         
 		
@@ -261,11 +330,62 @@ public class MainWindow extends JFrame implements ActionListener{
 				IndexMaker a = master.makeIndex(indexer_directory.getText(), stopWord.isSelected(), 
 						biWord.isSelected(), Integer.parseInt(biword_count.getText()));
 				master.saveIndex(indexer_indexfilename.getText());
+			}
+			
+			else if (getDictionary.isSelected()){
+				List<String> words = master.generateDictionary(getDictionary_inputFilePath.getText());
+				Collections.sort(words); 
+				String result = "" ;
+				for ( String word : words)
+					result += word + "\n" ; 
+				text_area.setText(result) ;
+			}
+			else if (retrieval.isSelected()){
+				//public List<Integer> retrievalFromFile(String addr ,String query, int maxCount,int searchType ){
+				//public List<Integer> retrievalFromDocs(String docAddr, boolean stopWord
+				List<Integer> docs ; 
+				if ( retrieval_options.getSelectedIndex() == 0){
+					docs = master.retrievalFromFile(retrieval_filePath.getText(), retrieval_query.getText(),
+							Integer.parseInt(retrieval_max.getText()), retrieval_model.getSelectedIndex());
+				}
+				else{
+					docs = master.retrievalFromDocs(retrieval_filePath.getText(), stopWord.isSelected(), 
+							biWord.isSelected(), Integer.parseInt(biword_count.getText()), retrieval_query.getText(),
+							Integer.parseInt(retrieval_max.getText()), retrieval_model.getSelectedIndex());
+				}
+				String result = "" ; 
+				for ( Integer doc: docs){
+					result += (" " +doc + "," ) ; 
+				}
+//				if ( docs.size()>0)
+//					result = result.substring(result.length()-2);
+				text_area.setText(result) ; 
+				
+			}
+			else if (getPostinglist.isSelected()){
+				IndexItem item = master.getTermPostingList(getPostinglist_term.getText()) ; 
+				text_area.setText(item.toString());
+			}
+			
+			else if ( evaluation.isSelected()){
+				Evalulator evalulator = new Evalulator(evaluation_querysPrefix.getText(), 
+						evaluation_docsPrefix.getText(), evaluation_answerAddress.getText()) ;
+				try {
+					text_area.setText(evalulator.eval()) ;
+				} catch (FileNotFoundException e1) {
+					e1.printStackTrace();
+				} 
+			}
+			else if (frequentBiwords.isSelected()){
 				
 			}
 		}
-		if ( e.getSource() == biWord){
+		else if ( e.getSource() == biWord){
 			biword_count.setEnabled(biWord.isSelected());
+		}
+		else if ( e.getSource() == frequentBiwords){
+			biWord.setSelected(true);
+			biword_count.setEnabled(true) ;
 		}
 	}
 	

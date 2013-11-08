@@ -34,6 +34,20 @@ public class IndexItem implements Serializable{
 		}
 	}
 	
+	public String toString(){
+		String result = this.name + ": " ;
+		result += this.DocFreq + " - " ; 
+		
+		Iterator<Entry<Integer,Integer>> iterator = this.docs.entrySet().iterator();
+		//System.out.print("term: "+this.name+"["+this.DocFreq+"]:");
+		while(iterator.hasNext()){
+			Entry<Integer, Integer> temporalEntry = (Entry<Integer,Integer>)iterator.next();
+			result += temporalEntry.getKey() + " [" + temporalEntry.getValue() + "] , " ; 
+//			System.out.print(""+temporalEntry.getKey()+":"+temporalEntry.getValue()+" ");
+		}
+		return result  ;
+	}
+	
 	public void printItem(){
 		Iterator<Entry<Integer,Integer>> iterator = this.docs.entrySet().iterator();
 		System.out.print("term: "+this.name+"["+this.DocFreq+"]:");
