@@ -39,7 +39,7 @@ public class Indexer {
 		if( temporal == null){
 			temporal = new IndexItem(term);
 		}
-		temporal.addDoc(doc);
+		temporal.incrementDoc(doc);
 		this.index.put(term, temporal);
 	}
 	

@@ -42,7 +42,9 @@ public class MasterClass {
 			index.addTDList(tdList);
 			index.compileList();
 		}
-		
+		if(stopWord){
+			index.stopWordTermination(stopWrodsDoc);
+		}
 		//now we print index to test the program
 		index.printIndex();
 		
