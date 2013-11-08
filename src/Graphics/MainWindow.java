@@ -22,7 +22,10 @@ import mir1.StopWord;
 public class MainWindow extends JFrame implements ActionListener{
 	
 	private JRadioButton tokenizer ; 
-	private JRadioButton  addToIndex; 
+	private JRadioButton  addToIndex;
+	private JTextField addToIndex_directory ; 
+	private JTextField addToIndex_name ; 
+	
 	private JRadioButton  indexer;
 	private JRadioButton  getDictionary;
 	private JRadioButton  retrieval;
@@ -37,6 +40,9 @@ public class MainWindow extends JFrame implements ActionListener{
 	private JComboBox retrieval_options ; 
 	private JTextField retrieval_max ; 
 	private JComboBox retrieval_model ; 
+	private JTextField retrieval_filePath; 
+	private JTextField retrieval_query; 
+	
 	
 	private MasterClass master ; 
 	public MainWindow(){
@@ -74,6 +80,16 @@ public class MainWindow extends JFrame implements ActionListener{
 		addToIndex.setSize(100, 30); 
 		addToIndex.addActionListener(this) ;
 		this.getLayeredPane().add(addToIndex);
+		
+		addToIndex_directory = new JTextField(); 
+		addToIndex_directory.setSize(50, 25);
+		addToIndex_directory.setLocation(330, 320);
+		addToIndex_directory.setLayout(null);
+		addToIndex_directory.setVisible(true);
+		addToIndex_directory.setText("20");
+		this.getLayeredPane(). add(addToIndex_directory);
+		
+		
 		
 		indexer = new JRadioButton("Make Index");
 		indexer.setSize(100, 30);
@@ -113,15 +129,34 @@ public class MainWindow extends JFrame implements ActionListener{
 		retrieval_max.setLocation(330, 320);
 		retrieval_max.setLayout(null);
 		retrieval_max.setVisible(true);
-		retrieval_max.setText("Data/Docs");
+		retrieval_max.setText("20");
 		this.getLayeredPane(). add(retrieval_max);
 		
 		String [] ops2 = {"Boolean" , "WordCount" , "Total Word Count" , "Inner Product" , "Cosine similarity" } ; 
-		retrieval_options = new JComboBox(ops2);
-		retrieval_options.setSelectedIndex(0) ; 
-		retrieval_options.setSize(105 , 20) ; 
-		retrieval_options.setLocation(220, 320);
-		this.getLayeredPane().add(retrieval_options);
+		retrieval_model = new JComboBox(ops2);
+		retrieval_model.setSelectedIndex(0) ; 
+		retrieval_model.setSize(105 , 20) ; 
+		retrieval_model.setLocation(220, 320);
+		this.getLayeredPane().add(retrieval_model);
+		
+		retrieval_filePath = new JTextField(); 
+		retrieval_filePath.setSize(200, 25);
+		retrieval_filePath.setLocation(140, 350);
+		retrieval_filePath.setLayout(null);
+		retrieval_filePath.setVisible(true);
+		retrieval_filePath.setText("Data/Docs");
+		this.getLayeredPane(). add(retrieval_filePath);
+		
+		retrieval_query = new JTextField(); 
+		retrieval_query.setSize(200, 25);
+		retrieval_query.setLocation(140, 380);
+		retrieval_query.setLayout(null);
+		retrieval_query.setVisible(true);
+		retrieval_query.setText("Data/Docs");
+		this.getLayeredPane(). add(retrieval_query);
+		
+		
+		
 		
 
 		group = new ButtonGroup();
@@ -151,6 +186,7 @@ public class MainWindow extends JFrame implements ActionListener{
 		jp.setSize(330 , 600);
 		jp.setLocation(450,  40) ;
         add(jp, BorderLayout.CENTER);
+        
 		
         stopWord = new JCheckBox("Stop Word");
         stopWord.setSize(100, 30);

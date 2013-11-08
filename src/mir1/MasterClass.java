@@ -99,6 +99,7 @@ public class MasterClass {
 	public IndexItem getTermPostingList(String term){
 		return this.index.getIndexItem(term);
 	}
+	
 	public List<String> getBiwords(String addr , int maxBiwords){
 		ReadFile files = new ReadFile(addr);
 		List<Doc> docs = files.getDocsBuffers();
