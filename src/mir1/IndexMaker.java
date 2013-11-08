@@ -71,6 +71,7 @@ public class IndexMaker implements Serializable{
 			docSet.add(td.docID);
 			
 		}
+		
 	}
 	public int docNumber(){
 		return docSet.size();
