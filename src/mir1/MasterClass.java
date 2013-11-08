@@ -1,5 +1,9 @@
 package mir1;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.util.ArrayList;
 import java.util.List;
 
 import mirsearch.SearchClass;
@@ -55,5 +59,33 @@ public class MasterClass {
 	public List<Integer> Search(String query, int maxCount , int searchType ){
 		return this.searcher.searchIt(query, maxCount, searchType);
 	}
+	public List<String> getDictionary(){
+		return index.getDictionary();
+	}
+	
+	public List<String> generateTokens(File file){
+		List<String> result =  new ArrayList<String>();
+		try{
+			BufferedReader bf = new BufferedReader(new FileReader(file));
+			Doc d = new Doc(bf, "HAHA", 1);
+			List<Doc> docs = new ArrayList<Doc>();
+			docs.add(d);
+			DocMap mapper = new DocMap(docs);
+			mapper.mapIt();
+			docs = mapper.getMappedDocs();
+			List<Token> tokens = docs.get(0).tokens;
+			for(Token t:tokens){
+				result.add(t.getContent());
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return result;
+		
+	}
+	/*
+	public List<String> generateDictionary(String addr){
+		
+	}*/
 	
 }
