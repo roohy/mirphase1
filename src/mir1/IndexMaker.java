@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -17,6 +18,7 @@ public class IndexMaker {
 	Map<String, IndexItem> index;
 	int docNumber;
 	Set<Integer> docSet;
+	Map<Integer,Double> docLength;
 	public IndexMaker(){
 		inputTD = null;
 		index = new HashMap<String,IndexItem>();
@@ -146,5 +148,31 @@ public class IndexMaker {
 			return 0;
 		return item.DocFreq;
 	}
-
+	
+	//this function update doc length map
+	//which contains vector length of docs so we can use it in our cosine vector search;)
+	public void updateDocLength(){
+		this.docLength = null;
+		this.docLength = new HashMap<Integer,Double>();
+		for(IndexItem item: index.values()){
+			Map<Integer, Integer> itemPostings = item.getPostingListComplete(); 
+			for(Entry<Integer,Integer> itemMap: itemPostings.entrySet()){
+				Double score = docLength.get(itemMap.getKey());
+				if(score == null)
+					score = 0.0;
+				score  += Math.pow(itemMap.getValue(), 2.0);
+				docLength.put(itemMap.getKey(), score);
+			}
+		}
+		//now we get square root of every doc score to get doc length
+		for(Integer tempKey: docLength.keySet()){
+			Double score = docLength.get(tempKey);
+			score = Math.sqrt(score);
+			docLength.put(tempKey, score);
+		}
+	}
+	public Double getDocLength(Integer key){
+		Double result = this.docLength.get(key);
+		return result;
+	}
 }

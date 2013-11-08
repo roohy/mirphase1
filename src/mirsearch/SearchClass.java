@@ -19,6 +19,8 @@ public class SearchClass {
 	BoolSearch bSearcher;
 	TotalCountSearch tCountSearcher;
 	WordCountSearch wCountSearcher;
+	InnerProductSearch innerPSearch;
+	CosineSearch coSearch;
 	List<Token> queryTokens;
 	
 	
@@ -28,6 +30,8 @@ public class SearchClass {
 		this.bSearcher = new BoolSearch(index);
 		this.tCountSearcher = new TotalCountSearch(index);
 		this.wCountSearcher = new WordCountSearch(index);
+		this.innerPSearch = new InnerProductSearch(index);
+		this.coSearch = new CosineSearch(index);
 	}
 	
 	public void tokenizeQuery(String query){
@@ -93,6 +97,13 @@ public class SearchClass {
 		case 2:
 			removeDuplicates();
 			result = tCountSearcher.searchIt(this.queryTerms(), maxLen);
+			break;
+		case 3:
+			result = innerPSearch.searchIt(this.queryVector(), maxLen);
+			break;
+		case 4:
+			result = coSearch.searchIt(this.queryVector(), maxLen);
+			break;
 		default:
 			result = null;
 			break;
