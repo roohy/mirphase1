@@ -9,14 +9,18 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.TreeSet;
 
 public class IndexMaker {
 	List<TermDoc> inputTD;
 	Map<String, IndexItem> index;
-	
+	int docNumber;
+	Set<Integer> docSet;
 	public IndexMaker(){
 		inputTD = null;
 		index = new HashMap<String,IndexItem>();
+		docSet = new TreeSet<Integer>();
 	}
 	
 	public void addTDList(List<TermDoc> list){
@@ -30,9 +34,14 @@ public class IndexMaker {
 		}
 		for (TermDoc td: this.inputTD){
 			addToIndex(td.term, td.docID);
+			//trying to findout number of docs;
+			docSet.add(td.docID);
+			
 		}
 	}
-	
+	public int docNumber(){
+		return docSet.size();
+	}
 	
 	public void addToIndex(String term , int doc){
 		IndexItem temporal = this.index.get(term);
@@ -123,6 +132,19 @@ public class IndexMaker {
 	}
 	
 	//this is used for inner prodct porpuses
-	//public Map<Integer,Integer> getSinglePostingList(String  )
+	public Map<Integer,Integer> getSinglePostingList(String  term){
+		
+		IndexItem item =  this.index.get(term);
+		if ( item == null){
+			return null;
+		}
+		return item.getPostingListComplete();
+	}
+	public int getDocFrequency(String term){
+		IndexItem item= this.index.get(term);
+		if( item == null)
+			return 0;
+		return item.DocFreq;
+	}
 
 }
