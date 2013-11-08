@@ -33,6 +33,7 @@ public class InnerProductSearch {
 				dPoint += ( Math.log(1.00 + singleDoc.getValue())
 						* (Math.log(1.00 + term.getValue().doubleValue())
 								*Math.log(index.docNumber()/temporalMap.size()) )  );
+				//System.out.println("updating doc score "+dPoint+" for "+singleDoc.getKey());
 				docPoints.put(singleDoc.getKey(), dPoint);
 			}
 		}

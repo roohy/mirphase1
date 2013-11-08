@@ -20,6 +20,9 @@ public class WordCountSearch {
 		Map<Integer,Integer> queryDoc = new HashMap<Integer,Integer>();
 		for (String term : terms){
 			List<Integer> temporalList = index.getPostingListNoFreq(term);
+			if(temporalList == null){
+				continue;
+			}
 			for(Integer docID: temporalList){
 				Integer totalCount = queryDoc.get(docID);
 				if( totalCount == null)

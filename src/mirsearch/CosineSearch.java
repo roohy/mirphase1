@@ -27,6 +27,7 @@ public class CosineSearch {
 				continue;
 			//here we check each doc in the posting list added
 			for(Entry<Integer,Integer> singleDoc: temporalMap.entrySet()){
+				System.out.println("a doc has term "+term.getKey()+ " doc:"+singleDoc.getKey());
 				Double dPoint = docPoints.get(singleDoc.getKey());
 				if(dPoint == null){
 					dPoint = 0.0;

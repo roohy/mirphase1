@@ -27,6 +27,7 @@ public class SearchClass {
 	public SearchClass(IndexMaker input) {
 		// TODO Auto-generated constructor stub
 		this.index = input;
+		this.index.updateDocLength();
 		this.bSearcher = new BoolSearch(index);
 		this.tCountSearcher = new TotalCountSearch(index);
 		this.wCountSearcher = new WordCountSearch(index);
@@ -73,7 +74,7 @@ public class SearchClass {
 				temp = 0;
 			temp++;
 			result.put(t.getContent(), temp);
-			
+			System.out.println("updating query vector "+t.getContent()+" to "+temp);
 		}
 		return result;
 	}
@@ -105,6 +106,7 @@ public class SearchClass {
 			result = coSearch.searchIt(this.queryVector(), maxLen);
 			break;
 		default:
+			System.out.println("Search Query Type is So Wrong I will Throw an exception");
 			result = null;
 			break;
 		}

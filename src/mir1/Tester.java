@@ -34,7 +34,10 @@ public class Tester {
 		
 		//here we instantiate a searcher class
 		SearchClass searcher = new SearchClass(index);
-		List<Integer> searchResults = searcher.searchIt("the only all chance", 10, 1);
+		List<Integer> searchResults = searcher.searchIt("high hopes great britain", 10, 3);
+		if( searchResults == null){
+			System.out.println("Search Rsesult list is null oh godddd");
+		}
 		BoolSearch.printList(searchResults);
 	}
 }

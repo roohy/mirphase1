@@ -15,12 +15,21 @@ public class BoolSearch {
 		List<Integer> result = new ArrayList<Integer>();
 		List<List<Integer>> list = new ArrayList<List<Integer>>();
 		for(String term : terms){
-			list.add(this.index.getPostingListNoFreq(term));
+			List<Integer> tempList = this.index.getPostingListNoFreq(term);
+			if(tempList == null)
+				continue;
+			list.add(tempList);
+		}
+		if( list.size() == 0){
+			System.out.println("No results were found in bool search");
+			return result;
 		}
 		if( list.size() == 1 ){
+			System.out.println("size of this is "+list.get(0).size());
 			return list.get(0);
+			
 		}
-		
+		System.out.println("size of lists is "+list.get(0).size()+" and "+list.get(1).size());
 		result = SearchClass.intersection(list.get(0), list.get(1));
 		for ( int i = 2; i < list.size(); i++){
 			result = SearchClass.intersection(result, list.get(i));
