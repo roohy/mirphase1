@@ -69,7 +69,7 @@ public class DocMap {
 		this.bwList = new ArrayList<TermDoc>();
 		for( Doc doc: this.docs){
 			for( int i = 1 ; i<doc.tokens.size(); i++){
-				bwList.add(new TermDoc(doc.tokens.get(i)+" "+doc.tokens.get(i-1), doc.docID));
+				bwList.add(new TermDoc(doc.tokens.get(i).getContent()+" "+doc.tokens.get(i-1).getContent(), doc.docID));
 			}
 		}
 		Map<String, Integer> occurences = new HashMap<String, Integer>();
