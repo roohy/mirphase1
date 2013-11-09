@@ -57,9 +57,9 @@ public class MainWindow extends JFrame implements ActionListener{
 	private JTextField evaluation_querysPrefix ; 
 	private JTextField evaluation_answerAddress ; 
 	private JRadioButton frequentBiwords ; 
-	private JTextField frequentBiwords_maxnum ; 
 	private JTextField frequentBiwords_directory ; 
-	
+	private JRadioButton getPostingBiwords ; 
+	private JTextField getPostingBiwrods_directory ; 
 	
 	private MasterClass master ; 
 	public MainWindow(){
@@ -257,6 +257,20 @@ public class MainWindow extends JFrame implements ActionListener{
 		frequentBiwords_directory.setText("Data/Docs");
 		this.getLayeredPane(). add(frequentBiwords_directory);
 		
+		getPostingBiwords = new JRadioButton("Bi-PostList");
+		getPostingBiwords.setSize(110, 30);
+		getPostingBiwords.setLocation(400, 230);
+		getPostingBiwords.addActionListener(this) ;
+		this.getLayeredPane().add(getPostingBiwords);
+		
+		getPostingBiwrods_directory = new JTextField(); 
+		getPostingBiwrods_directory.setSize(200, 25);
+		getPostingBiwrods_directory.setLocation(510, 230);
+		getPostingBiwrods_directory.setLayout(null);
+		getPostingBiwrods_directory.setVisible(true);
+		getPostingBiwrods_directory.setText("Data/Docs");
+		this.getLayeredPane(). add(getPostingBiwrods_directory);
+		
 		
 		group = new ButtonGroup();
 	    group.add(tokenizer);
@@ -267,6 +281,7 @@ public class MainWindow extends JFrame implements ActionListener{
 		group.add(getPostinglist) ;
 		group.add(evaluation) ;
 		group.add(frequentBiwords) ;
+		group.add(getPostingBiwords) ;
 
 		go = new JButton("Go!"); 
 		go.setSize(130 , 55 ); 
@@ -378,23 +393,30 @@ public class MainWindow extends JFrame implements ActionListener{
 				} 
 			}
 			else if (frequentBiwords.isSelected()){
-				System.out.println("testing+++++++++++++++++++++++++++++++++++++++++");
-				System.out.println(Integer.parseInt(biword_count.getText()));
 				List<IndexItem> list = master.getBiwordDocs(frequentBiwords_directory.getText(), Integer.parseInt(biword_count.getText()));
 				Collections.sort(list) ;
 				
 				String result = "" ; 
-				for ( int i = 0 ; i < Integer.parseInt(biword_count.getText()) ; i++){
+				for ( int i = 0 ; i < Math.min(Integer.parseInt(biword_count.getText()), list.size()) ; i++){
 					result += list.get(i).getname() + " : " + list.get(i).getDocFreq() + "\n" ;
 				}
 				text_area.setText(result) ; 
 			
 			}
+			else if( getPostingBiwords.isSelected()){
+				List<IndexItem> list = master.getBiwordDocs(getPostingBiwrods_directory.getText(), Integer.parseInt(biword_count.getText()));
+				Collections.sort(list) ;
+				String result = "" ; 
+				for ( int i = 0 ; i < Math.min(Integer.parseInt(biword_count.getText()), list.size()) ; i++){
+					result += list.get(i).toString() + "\n";
+				}
+				text_area.setText(result) ; 
+			}
 		}
 		else if ( e.getSource() == biWord){
 			biword_count.setEnabled(biWord.isSelected());
 		}
-		else if ( e.getSource() == frequentBiwords){
+		else if ( e.getSource() == frequentBiwords || e.getSource() == getPostingBiwords){
 			biWord.setSelected(true);
 			biword_count.setEnabled(true) ;
 		}
