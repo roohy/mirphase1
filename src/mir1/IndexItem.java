@@ -105,9 +105,9 @@ public class IndexItem implements Serializable , Comparable<IndexItem>{
 	@Override
 	public int compareTo(IndexItem o) {
 		if ( this.DocFreq > o.DocFreq)
-			return 1 ; 
-		if ( this.DocFreq <  o.DocFreq)
 			return -1 ; 
+		if ( this.DocFreq <  o.DocFreq)
+			return 1 ; 
 		return 0;
 	}
 }

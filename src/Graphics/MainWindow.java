@@ -72,7 +72,7 @@ public class MainWindow extends JFrame implements ActionListener{
 		this.setTitle("SeachEngine!!!");
 		this.setLayout(null);
 		this.setLocation(200, 100);
-		this.setSize(1200, 700);
+		this.setSize(1100, 700);
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		this.setVisible(true);
 		
@@ -137,9 +137,6 @@ public class MainWindow extends JFrame implements ActionListener{
 		indexer_indexfilename.setText("MyIndexes/index1");
 		this.getLayeredPane(). add(indexer_indexfilename);
 		
-		
-		
-		
 	
 		getDictionary = new JRadioButton("getDictionary");
 		getDictionary.setSize(100, 30);
@@ -199,19 +196,6 @@ public class MainWindow extends JFrame implements ActionListener{
 		retrieval_query.setText("your query here");
 		this.getLayeredPane(). add(retrieval_query);
 		
-		getPostinglist = new JRadioButton("PostingList");
-		getPostinglist.setSize(100, 30);
-		getPostinglist.setLocation(30, 420);
-		getPostinglist.addActionListener(this) ;
-		this.getLayeredPane().add(getPostinglist);
-		
-		getPostinglist_term = new JTextField(); 
-		getPostinglist_term.setSize(200, 25);
-		getPostinglist_term.setLocation(140, 420);
-		getPostinglist_term.setLayout(null);
-		getPostinglist_term.setVisible(true);
-		getPostinglist_term.setText("your term here!");
-		this.getLayeredPane(). add(getPostinglist_term);
 		
 		evaluation = new JRadioButton("Evaluation");
 		evaluation.setSize(100, 30);
@@ -271,6 +255,20 @@ public class MainWindow extends JFrame implements ActionListener{
 		getPostingBiwrods_directory.setText("Data/Docs");
 		this.getLayeredPane(). add(getPostingBiwrods_directory);
 		
+		getPostinglist = new JRadioButton("PostingList");
+		getPostinglist.setSize(100, 30);
+		getPostinglist.setLocation(400, 290);
+		getPostinglist.addActionListener(this) ;
+		this.getLayeredPane().add(getPostinglist);
+		
+		getPostinglist_term = new JTextField(); 
+		getPostinglist_term.setSize(200, 25);
+		getPostinglist_term.setLocation(510, 290);
+		getPostinglist_term.setLayout(null);
+		getPostinglist_term.setVisible(true);
+		getPostinglist_term.setText("your term here!");
+		this.getLayeredPane(). add(getPostinglist_term);
+
 		
 		group = new ButtonGroup();
 	    group.add(tokenizer);
@@ -291,7 +289,7 @@ public class MainWindow extends JFrame implements ActionListener{
 		
 		text_area = new JTextArea() ; 
 		text_area.setSize(300, 600); 
-		text_area.setLocation(850, 40) ;
+		text_area.setLocation(750, 40) ;
 		text_area.setVisible(true);
 	//TODO	text_area.setBorder()
 		text_area.setText("slkfdasldkfjas;fl");
@@ -300,7 +298,7 @@ public class MainWindow extends JFrame implements ActionListener{
 		JScrollPane jp = new JScrollPane(text_area);
 		jp.setVisible(true);
 		jp.setSize(330 , 600);
-		jp.setLocation(850,  40) ;
+		jp.setLocation(750,  40) ;
         add(jp, BorderLayout.CENTER);
         
 		
@@ -395,6 +393,7 @@ public class MainWindow extends JFrame implements ActionListener{
 			else if (frequentBiwords.isSelected()){
 				List<IndexItem> list = master.getBiwordDocs(frequentBiwords_directory.getText(), Integer.parseInt(biword_count.getText()));
 				Collections.sort(list) ;
+				
 				
 				String result = "" ; 
 				for ( int i = 0 ; i < Math.min(Integer.parseInt(biword_count.getText()), list.size()) ; i++){
